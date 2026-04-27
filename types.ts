@@ -6,6 +6,8 @@ export interface Product {
     price: number; // Base price in CNY for calculation
     retailPrice: string; // Display string
     img: string;
+    detailUrl?: string;
+    tokenPrice?: Partial<Record<TokenConfig['id'], number>>;
     desc: string;
     sold: number;
     categories: string[];

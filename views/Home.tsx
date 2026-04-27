@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { PRODUCTS, CATEGORIES, TOKENS } from '../constants';
+import { PRODUCTS, CATEGORIES, TOKENS, getTokenAmountEntries } from '../constants';
 import { useStore } from '../context/StoreContext';
 import { ImageWithFallback } from '../components/ImageWithFallback';
 
@@ -153,6 +153,21 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
                                     <div className="flex justify-between items-end">
                                         <div className="flex flex-col gap-1">
                                             {(() => {
+                                                const tokenEntries = getTokenAmountEntries(p.tokenPrice);
+                                                if (tokenEntries.length > 0) {
+                                                    return (
+                                                        <div className="flex flex-col gap-0.5">
+                                                            {tokenEntries.map(([token, amount], idx) => (
+                                                                <div key={token} className="flex items-center gap-1">
+                                                                    {idx > 0 && <span className="text-sm font-extrabold text-[#FF6D16] leading-none">+</span>}
+                                                                    <span className="text-base font-extrabold text-[#FF6D16] leading-none">{amount.toLocaleString()}</span>
+                                                                    <span className="text-xs font-bold text-[#FF6D16]">{token}</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    );
+                                                }
+
                                                 const getRate = (id: string) => TOKENS.find(t => t.id === id)?.rate ?? 1;
                                                 if (p.displayCurrency === 'MIX') {
                                                     const fec = Math.ceil(p.price * 0.8 * getRate('FEC'));

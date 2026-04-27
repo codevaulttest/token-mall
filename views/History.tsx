@@ -127,8 +127,8 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
                                     </div>
                                     <div className="flex justify-between items-end mt-2">
                                         <span className={`text-xs px-1.5 py-0.5 rounded border ${
-                                            recordType === 'transfer' ? 'bg-blue-50 text-blue-500 border-blue-100' : 
-                                            (recordType === 'redemption' ? 'bg-green-50 text-[#FF6D16] border-[#FF6D16]/10' : 'bg-[#FF6D16]/5 text-[#FF6D16] border-[#FF6D16]/10')
+                                            recordType === 'transfer' ? 'bg-blue-50 text-blue-500 border-blue-100' :
+                                            'bg-[#FF6D16]/5 text-[#FF6D16] border-[#FF6D16]/10'
                                         }`}>
                                             {log.type}
                                         </span>

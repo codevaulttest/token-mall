@@ -26,9 +26,20 @@ const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 // Initial Mock Logs
 const INITIAL_LOGS: ActionLog[] = [
-    { id: '1', orderId: '2025042414358821', date: '2025-04-24', type: '提货', item: '七星伴月月饼', img: 'https://images.unsplash.com/photo-1631857455684-a54a2f03665f?q=80&w=200&auto=format&fit=crop', count: 1, status: '待发货' },
-    { id: '2', orderId: '2024060209201154', date: '2024-06-02', type: '提货', item: '阳澄湖大闸蟹', img: 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?q=80&w=200&auto=format&fit=crop', count: 1, status: '待发货' },
-    { id: '3', orderId: '2023111716459932', date: '2023-11-17', type: '提货', item: '【善】字号-小柑茶 (一盒装)', img: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=200&auto=format&fit=crop', count: 1, status: '待发货' },
+    // 兑换记录
+    { id: 'r1', orderId: '2026032710482201', date: '2026-03-27', type: '兑换(10000FEC)', item: '黄花梨面膜', img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=200&auto=format&fit=crop', count: 1, status: '已完成' },
+    { id: 'r2', orderId: '2026021509331847', date: '2026-02-15', type: '兑换(47880FEC)', item: '黄花梨樽花月酒', img: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?q=80&w=200&auto=format&fit=crop', count: 1, status: '已完成' },
+    { id: 'r3', orderId: '2025120314220093', date: '2025-12-03', type: '兑换(5000FEC+10000DOS)', item: '黄花梨足贴', img: 'https://images.unsplash.com/photo-1544367563-12123d8965cd?q=80&w=200&auto=format&fit=crop', count: 2, status: '已完成' },
+    { id: 'r4', orderId: '2025110822174456', date: '2025-11-08', type: '兑换(9900DOS)', item: '云梵普洱茶', img: 'https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?q=80&w=200&auto=format&fit=crop', count: 1, status: '已完成' },
+    // 提货记录
+    { id: 'p1', orderId: '2026041814358821', date: '2026-04-18', type: '提货', item: '黄花梨樽花月酒', img: 'https://images.unsplash.com/photo-1569919659476-b08588c3571c?q=80&w=200&auto=format&fit=crop', count: 2, status: '待发货' },
+    { id: 'p2', orderId: '2026032509201154', date: '2026-03-25', type: '提货', item: '豪酒', img: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=200&auto=format&fit=crop', count: 1, status: '待收货' },
+    { id: 'p3', orderId: '2026010716459932', date: '2026-01-07', type: '批量提货', item: '黄花梨黑茶壹号 等3件', img: 'https://images.unsplash.com/photo-1564890369478-c5235089f65b?q=80&w=200&auto=format&fit=crop', count: 3, status: '已收货' },
+    { id: 'p4', orderId: '2025042414358821', date: '2025-04-24', type: '提货', item: '七星伴月月饼', img: 'https://images.unsplash.com/photo-1631857455684-a54a2f03665f?q=80&w=200&auto=format&fit=crop', count: 1, status: '已收货' },
+    // 转让记录
+    { id: 't1', orderId: '2026040311245502', date: '2026-04-03', type: '转让', item: '黄花梨喷雾', img: 'https://images.unsplash.com/photo-1615397349754-cfa2066a298e?q=80&w=200&auto=format&fit=crop', count: 1, status: '转让成功' },
+    { id: 't2', orderId: '2026021807563318', date: '2026-02-18', type: '批量转让', item: '红酒 等2件', img: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=200&auto=format&fit=crop', count: 2, status: '转让成功' },
+    { id: 't3', orderId: '2025093020114477', date: '2025-09-30', type: '转让', item: '黄花梨手串', img: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=200&auto=format&fit=crop', count: 1, status: '转让成功' },
 ];
 
 // Initial Mock Addresses - Cleared

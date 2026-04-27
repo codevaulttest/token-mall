@@ -3,7 +3,7 @@ import { Product, InventoryItem, ModalType, Address, TokenConfig } from '../type
 import { useStore } from '../context/StoreContext';
 import { ImageWithFallback } from './ImageWithFallback';
 import { FecIcon, SlcIcon, DosIcon, CnvIcon } from './CurrencyIcons';
-import { CHINA_REGIONS, TOKENS } from '../constants';
+import { CHINA_REGIONS, TOKENS, formatTokenAmounts, getTokenAmountEntries } from '../constants';
 
 interface ModalProps {
     type: ModalType;
@@ -74,6 +74,16 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
             const shippingFeeDOS = inputCount * 10; // 10 DOS per item
 
             const newAmounts: { [key: string]: number } = {};
+
+            const fixedTokenEntries = getTokenAmountEntries(p.tokenPrice);
+            if (fixedTokenEntries.length > 0) {
+                fixedTokenEntries.forEach(([token, amount]) => {
+                    newAmounts[token] = amount * inputCount;
+                });
+                newAmounts['DOS'] = (newAmounts['DOS'] || 0) + shippingFeeDOS;
+                setCalculatedAmounts(newAmounts);
+                return;
+            }
 
             if (paymentMethod === 'MIX') {
                 // Fixed Ratio Logic: 80% FEC + 20% SLC (Example fixed ratio)
@@ -342,6 +352,12 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
     if (type === 'product_detail') {
         const p = data as Product;
         const totalCNY = p.price * inputCount;
+        const fixedTokenEntries = getTokenAmountEntries(p.tokenPrice);
+        const hasFixedTokenPrice = fixedTokenEntries.length > 0;
+        const scaledTokenPrice = fixedTokenEntries.reduce<Product['tokenPrice']>((acc, [token, amount]) => {
+            acc[token] = amount * inputCount;
+            return acc;
+        }, {});
 
         // Validation Logic
         const isEnough = () => {
@@ -366,31 +382,58 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
         const cnvAmt = Math.ceil(totalCNY * getRate('CNV'));
 
         // Payment Options Config
-        const paymentOptions = [
-            { 
-                id: 'MIX', 
-                label: `${mixFec.toLocaleString()} FEC + ${mixSlc.toLocaleString()} SLC`,
-                desc: null,
-                icons: ['FEC', 'SLC'],
-                balanceText: `余额 ${userBalance.FEC?.toLocaleString()} FEC/ ${userBalance.SLC?.toLocaleString()} SLC`
-            },
-            { 
-                id: 'DOS', 
-                label: `${dosAmt.toLocaleString()} DOS`,
-                desc: null,
-                icons: ['DOS'],
-                balanceText: `余额 ${userBalance.DOS?.toLocaleString()} DOS`
-            },
-            { 
-                id: 'CNV', 
-                label: `${cnvAmt.toLocaleString()} CNV`,
-                desc: null,
-                icons: ['CNV'],
-                balanceText: `余额 ${userBalance.CNV?.toLocaleString()} CNV`
-            }
-        ];
+        const paymentOptions = hasFixedTokenPrice
+            ? [
+                {
+                    id: 'MIX',
+                    label: formatTokenAmounts(scaledTokenPrice),
+                    desc: null,
+                    icons: fixedTokenEntries.map(([token]) => token),
+                    balanceText: `余额 ${fixedTokenEntries.map(([token]) => `${(userBalance[token] || 0).toLocaleString()} ${token}`).join(' / ')}`
+                }
+            ]
+            : [
+                { 
+                    id: 'MIX', 
+                    label: `${mixFec.toLocaleString()} FEC + ${mixSlc.toLocaleString()} SLC`,
+                    desc: null,
+                    icons: ['FEC', 'SLC'],
+                    balanceText: `余额 ${userBalance.FEC?.toLocaleString()} FEC/ ${userBalance.SLC?.toLocaleString()} SLC`
+                },
+                { 
+                    id: 'DOS', 
+                    label: `${dosAmt.toLocaleString()} DOS`,
+                    desc: null,
+                    icons: ['DOS'],
+                    balanceText: `余额 ${userBalance.DOS?.toLocaleString()} DOS`
+                },
+                { 
+                    id: 'CNV', 
+                    label: `${cnvAmt.toLocaleString()} CNV`,
+                    desc: null,
+                    icons: ['CNV'],
+                    balanceText: `余额 ${userBalance.CNV?.toLocaleString()} CNV`
+                }
+            ];
 
         const renderPriceHeader = () => {
+            if (hasFixedTokenPrice) {
+                return (
+                    <div className="flex flex-wrap items-center gap-2 mb-5 text-[#FF6D16]">
+                        {fixedTokenEntries.map(([token, amount], idx) => (
+                            <React.Fragment key={token}>
+                                {idx > 0 && <span className="text-xl font-bold">+</span>}
+                                <div className="flex items-center">
+                                    {renderTokenIcon(token, "w-8 h-8 mr-2")}
+                                    <span className="text-3xl font-extrabold tracking-tight">{amount.toLocaleString()}</span>
+                                    <span className="text-lg font-bold ml-2">{token}</span>
+                                </div>
+                            </React.Fragment>
+                        ))}
+                    </div>
+                );
+            }
+
             if (p.displayCurrency === 'MIX') {
                 return (
                     <div className="flex items-center justify-between mb-5">
@@ -528,10 +571,16 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                         {step === 1 && (
                             <div className="mb-8">
                                 <h3 className="font-bold text-sm mb-3 text-gray-800">图文详情</h3>
-                                <div className="rounded-xl overflow-hidden bg-gray-50 space-y-0">
-                                    <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=600&auto=format&fit=crop" className="w-full h-auto block" alt="Detail 1" loading="lazy" />
-                                    <img src="https://images.unsplash.com/photo-1569919659476-b08588c3571c?q=80&w=600&auto=format&fit=crop" className="w-full h-auto block" alt="Detail 2" loading="lazy" />
-                                </div>
+                                {p.detailUrl ? (
+                                    <iframe
+                                        title={`${p.title}图文详情`}
+                                        src={p.detailUrl}
+                                        className="w-full h-[420px] rounded-xl bg-gray-50 border-0"
+                                        loading="lazy"
+                                    />
+                                ) : (
+                                    <div className="rounded-xl bg-gray-50 p-4 text-sm text-gray-400">暂无图文详情</div>
+                                )}
                             </div>
                         )}
                     </div>
