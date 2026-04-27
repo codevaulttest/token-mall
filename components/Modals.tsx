@@ -3,7 +3,7 @@ import { Product, InventoryItem, ModalType, Address, TokenConfig } from '../type
 import { useStore } from '../context/StoreContext';
 import { ImageWithFallback } from './ImageWithFallback';
 import { FecIcon, SlcIcon, DosIcon, CnvIcon } from './CurrencyIcons';
-import { CHINA_REGIONS, TOKENS, formatTokenAmounts, getTokenAmountEntries } from '../constants';
+import { CHINA_REGIONS, TOKENS, formatTokenAmounts, getProductDetailImages, getTokenAmountEntries } from '../constants';
 
 interface ModalProps {
     type: ModalType;
@@ -353,6 +353,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
         const p = data as Product;
         const totalCNY = p.price * inputCount;
         const fixedTokenEntries = getTokenAmountEntries(p.tokenPrice);
+        const detailImages = getProductDetailImages(p);
         const hasFixedTokenPrice = fixedTokenEntries.length > 0;
         const scaledTokenPrice = fixedTokenEntries.reduce<Product['tokenPrice']>((acc, [token, amount]) => {
             acc[token] = amount * inputCount;
@@ -564,13 +565,18 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                         {step === 1 && (
                             <div className="mb-8">
                                 <h3 className="font-bold text-sm mb-3 text-gray-800">图文详情</h3>
-                                {p.detailUrl ? (
-                                    <iframe
-                                        title={`${p.title}图文详情`}
-                                        src={p.detailUrl}
-                                        className="w-full h-[420px] rounded-xl bg-gray-50 border-0"
-                                        loading="lazy"
-                                    />
+                                {detailImages.length > 0 ? (
+                                    <div className="rounded-xl overflow-hidden bg-gray-50">
+                                        {detailImages.map((imageUrl, index) => (
+                                            <img
+                                                key={imageUrl}
+                                                src={imageUrl}
+                                                alt={`${p.title}详情图 ${index + 1}`}
+                                                className="block w-full h-auto"
+                                                loading="lazy"
+                                            />
+                                        ))}
+                                    </div>
                                 ) : (
                                     <div className="rounded-xl bg-gray-50 p-4 text-sm text-gray-400">暂无图文详情</div>
                                 )}

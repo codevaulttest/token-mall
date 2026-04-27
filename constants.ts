@@ -25,6 +25,15 @@ export const formatTokenAmounts = (amounts?: Product['tokenPrice']) => (
         .join(' + ')
 );
 
+export const getProductDetailImages = (product: Product) => {
+    if (product.id === 102020) {
+        return [1, 2, 3, 4, 5].map(index => `https://global.picker8.org/pic/znjh/102020_d${index}.jpg`);
+    }
+
+    const detailImageId = product.id === 102014 ? 102013 : product.id;
+    return [`https://global.picker8.org/pic/znjh/${detailImageId}_d.jpg`];
+};
+
 export const PRODUCTS: Product[] = [
     { id: 102022, title: '云梵普洱茶', specs: '10盒(每盒8粒)', retailPrice: '990元/10盒', price: 990, img: 'https://global.picker8.org/pic/znjh/102022_p.jpg', detailUrl: 'https://global.picker8.org/pic/znjh/102022.html', tokenPrice: { FEC: 4000, SLC: 100 }, desc: COMMON_DESC, sold: 34, categories: ['茗茶养生'] },
     { id: 102021, title: '黄花梨黑茶壹号', specs: '1盒', retailPrice: '1080元/盒', price: 1080, img: 'https://global.picker8.org/pic/znjh/102021_p.jpg', detailUrl: 'https://global.picker8.org/pic/znjh/102021.html', tokenPrice: { FEC: 1600, SLC: 110 }, desc: COMMON_DESC, sold: 56, categories: ['茗茶养生', '精选礼盒'] },
