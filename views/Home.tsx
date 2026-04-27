@@ -140,8 +140,8 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
                                     <ImageWithFallback 
                                         src={p.img} 
                                         alt={p.title}
-                                        className="w-full h-auto min-h-[100px]" 
-                                        imgClassName="object-cover group-hover:scale-105 transition-transform duration-500"
+                                        className="w-full max-h-[300px] min-h-[100px]" 
+                                        imgClassName="object-cover object-top group-hover:scale-105 transition-transform duration-500"
                                         loading="lazy"
                                     />
                                     {/* Removed Badge */}
@@ -156,13 +156,15 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
                                                 const tokenEntries = getTokenAmountEntries(p.tokenPrice);
                                                 if (tokenEntries.length > 0) {
                                                     return (
-                                                        <div className="flex flex-col gap-0.5">
+                                                        <div className="flex flex-wrap items-baseline gap-x-1">
                                                             {tokenEntries.map(([token, amount], idx) => (
-                                                                <div key={token} className="flex items-center gap-1">
-                                                                    {idx > 0 && <span className="text-sm font-extrabold text-[#FF6D16] leading-none">+</span>}
+                                                                <React.Fragment key={token}>
+                                                                    {idx > 0 && <span className="text-base font-extrabold text-[#FF6D16] leading-none">+</span>}
+                                                                    <div className="flex items-baseline gap-1">
                                                                     <span className="text-base font-extrabold text-[#FF6D16] leading-none">{amount.toLocaleString()}</span>
                                                                     <span className="text-xs font-bold text-[#FF6D16]">{token}</span>
-                                                                </div>
+                                                                    </div>
+                                                                </React.Fragment>
                                                             ))}
                                                         </div>
                                                     );

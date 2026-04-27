@@ -424,7 +424,6 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                             <React.Fragment key={token}>
                                 {idx > 0 && <span className="text-xl font-bold">+</span>}
                                 <div className="flex items-center">
-                                    {renderTokenIcon(token, "w-8 h-8 mr-2")}
                                     <span className="text-3xl font-extrabold tracking-tight">{amount.toLocaleString()}</span>
                                     <span className="text-lg font-bold ml-2">{token}</span>
                                 </div>
@@ -438,10 +437,6 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                 return (
                     <div className="flex items-center justify-between mb-5">
                         <div className="flex items-center gap-2">
-                             <div className="flex -space-x-2">
-                                <FecIcon className="w-8 h-8 z-10 border-2 border-white rounded-full bg-white" />
-                                <SlcIcon className="w-8 h-8 border-2 border-white rounded-full bg-white" />
-                            </div>
                             <div className="flex items-baseline gap-1.5 text-[#FF6D16]">
                                 <span className="text-3xl font-extrabold tracking-tight">{mixFec.toLocaleString()} <span className="text-lg font-bold">FEC</span></span>
                                 <span className="text-xl font-bold">+</span>
@@ -454,7 +449,6 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                 return (
                     <div className="flex items-center justify-between mb-5">
                          <div className="flex items-center">
-                            <DosIcon className="w-8 h-8 mr-2" />
                             <span className="text-3xl font-extrabold text-[#FF6D16] tracking-tight">{dosAmt.toLocaleString()}</span>
                             <span className="text-lg font-bold text-[#FF6D16] ml-2">DOS</span>
                         </div>
@@ -464,7 +458,6 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                  return (
                     <div className="flex items-center justify-between mb-5">
                         <div className="flex items-center">
-                            <FecIcon className="w-8 h-8 mr-2" />
                             <span className="text-3xl font-extrabold text-[#FF6D16] tracking-tight">{(p.price * fecRate).toLocaleString()}</span>
                             <span className="text-lg font-bold text-[#FF6D16] ml-2">FEC</span>
                         </div>
