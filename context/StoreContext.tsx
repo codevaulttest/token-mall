@@ -5,6 +5,8 @@ import { INITIAL_INVENTORY, PRODUCTS } from '../constants';
 interface StoreContextType {
     currentView: ViewState;
     navigateTo: (view: ViewState) => void;
+    selectedCategory: string | null;
+    setSelectedCategory: (category: string | null) => void;
     inventory: InventoryItem[];
     logs: ActionLog[];
     userBalance: { [key: string]: number }; // Changed to generic map
@@ -60,6 +62,7 @@ const generateOrderId = () => {
 
 export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [currentView, setCurrentView] = useState<ViewState>('home');
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [inventory, setInventory] = useState<InventoryItem[]>(INITIAL_INVENTORY);
     const [logs, setLogs] = useState<ActionLog[]>(INITIAL_LOGS);
     const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -260,6 +263,8 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         <StoreContext.Provider value={{
             currentView,
             navigateTo,
+            selectedCategory,
+            setSelectedCategory,
             inventory,
             logs,
             userBalance,

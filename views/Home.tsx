@@ -8,8 +8,7 @@ interface HomeProps {
 }
 
 export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
-    const { navigateTo } = useStore();
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const { navigateTo, selectedCategory, setSelectedCategory } = useStore();
     const [searchQuery, setSearchQuery] = useState('');
 
     const toggleCategory = (categoryName: string) => {
