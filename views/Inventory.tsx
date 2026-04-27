@@ -71,34 +71,36 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
     };
 
     return (
-        <div className="min-h-full relative pb-4">
-            <AppHeader title={isSelectionMode ? `已选择 ${selectedIds.size} 件` : '我的库存'} onBack={isSelectionMode ? cancelSelectionMode : () => navigateTo('home')}>
-                {isSelectionMode ? (
-                    <div className="mt-4 flex items-center justify-between animate-fade-in">
+        <div className="min-h-full relative pb-4 bg-white">
+            <AppHeader
+                title={isSelectionMode ? `已选择 ${selectedIds.size} 件` : '我的库存'}
+                onBack={isSelectionMode ? cancelSelectionMode : () => navigateTo('home')}
+                actions={isSelectionMode ? (
+                    <div className="flex items-center gap-3 animate-fade-in">
                         <button onClick={cancelSelectionMode} className="text-gray-500 font-medium text-sm">取消</button>
                         <button onClick={toggleSelectAll} className="text-[#FF6D16] font-medium text-sm">
                             {selectedIds.size === inventory.length ? '取消全选' : '全选'}
                         </button>
                     </div>
                 ) : (
-                    <div className="mt-4 flex items-center gap-2">
-                        <button 
+                    <div className="flex items-center gap-2">
+                        <button
                             onClick={() => enterSelectionMode('transfer')}
                             className="h-8 px-2.5 bg-[#FF6D16]/10 border border-[#FF6D16]/20 text-[#FF6D16] rounded-lg text-xs font-bold active:bg-[#FF6D16]/20 transition flex items-center gap-1.5"
                         >
-                            <i className="fas fa-paper-plane text-[#FF6D16]"></i> 批量转让
+                            <i className="fas fa-exchange-alt text-[#FF6D16]"></i> 批量转让
                         </button>
-                        <button 
+                        <button
                             onClick={() => enterSelectionMode('pickup')}
                             className="h-8 px-2.5 bg-[#25C4D9] border border-[#25C4D9] text-white rounded-lg text-xs font-bold active:scale-95 transition flex items-center gap-1.5 shadow-md shadow-[#25C4D9]/20"
                         >
-                            <i className="fas fa-truck-loading text-white"></i> 批量提货
+                            <i className="fas fa-truck text-white"></i> 批量提货
                         </button>
                     </div>
                 )}
-            </AppHeader>
+            />
 
-            <div className="px-4 space-y-4 fade-in pb-24 pt-4">
+            <div className="px-4 space-y-4 fade-in pb-24">
                 {inventory.length === 0 ? (
                     <div className="text-center text-gray-400 py-20 flex flex-col items-center">
                         <i className="fas fa-box-open text-6xl text-gray-200 mb-4"></i>
@@ -110,7 +112,7 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                         <div 
                             key={item.inventoryId} 
                             onClick={() => isSelectionMode ? toggleSelection(item.inventoryId) : null}
-                            className={`bg-white p-3 rounded-2xl shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] border border-gray-50 flex gap-3 transition-all duration-300 ${isSelectionMode ? 'cursor-pointer active:scale-[0.99]' : ''} ${isSelectionMode && selectedIds.has(item.inventoryId) ? 'ring-2 ring-[#FF6D16]/50 bg-[#FF6D16]/5' : ''}`}
+                            className={`bg-white p-3 rounded-2xl shadow-[0_10px_24px_rgba(15,23,42,0.12)] flex gap-3 transition-all duration-300 ${isSelectionMode ? 'cursor-pointer active:scale-[0.99]' : ''} ${isSelectionMode && selectedIds.has(item.inventoryId) ? 'ring-2 ring-[#FF6D16]/50 bg-[#FF6D16]/5' : ''}`}
                         >
                             {/* Selection Checkbox */}
                             {isSelectionMode && (
@@ -121,14 +123,13 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                                 </div>
                             )}
 
-                            <div className="w-24 h-24 bg-gray-100 rounded-xl flex-shrink-0 overflow-hidden relative">
-                                <ImageWithFallback 
-                                    src={item.img} 
+                            <div className="w-24 h-24 bg-gray-100 rounded-xl flex-shrink-0 overflow-hidden">
+                                <ImageWithFallback
+                                    src={item.img}
                                     alt={item.title}
                                     className="w-full h-full"
                                     imgClassName="object-cover h-full"
                                 />
-                                <div className="absolute bottom-0 right-0 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded-tl-md z-20">x{item.count}</div>
                             </div>
                             <div className="flex-1 flex flex-col justify-between py-1">
                                 <div>
@@ -137,15 +138,18 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                                 </div>
                                 
                                 {!isSelectionMode && (
-                                    <div className="flex gap-2 mt-3 justify-end">
-                                        <button onClick={(e) => { e.stopPropagation(); onActionClick('transfer', item); }} className="px-3 py-1.5 bg-[#FF6D16]/10 border border-[#FF6D16]/20 text-[#FF6D16] rounded-lg text-xs font-medium active:bg-[#FF6D16]/20 transition flex items-center gap-1">
-                                            <i className="fas fa-paper-plane"></i>
-                                            转让
-                                        </button>
-                                        <button onClick={(e) => { e.stopPropagation(); onActionClick('pickup', item); }} className="px-4 py-1.5 bg-[#25C4D9] text-white rounded-lg text-xs font-bold active:scale-95 transition shadow-sm shadow-[#25C4D9]/30 flex items-center gap-1">
-                                            <i className="fas fa-truck-loading"></i>
-                                            提货
-                                        </button>
+                                    <div className="flex mt-3 items-center justify-between">
+                                        <span className="text-xs font-semibold text-[#FF6D16]">持有 x{item.count}</span>
+                                        <div className="flex gap-2">
+                                            <button onClick={(e) => { e.stopPropagation(); onActionClick('transfer', item); }} className="px-3 py-1.5 bg-[#FF6D16]/10 border border-[#FF6D16]/20 text-[#FF6D16] rounded-lg text-xs font-medium active:bg-[#FF6D16]/20 transition flex items-center gap-1">
+                                                <i className="fas fa-exchange-alt"></i>
+                                                转让
+                                            </button>
+                                            <button onClick={(e) => { e.stopPropagation(); onActionClick('pickup', item); }} className="px-4 py-1.5 bg-[#25C4D9] text-white rounded-lg text-xs font-bold active:scale-95 transition shadow-sm shadow-[#25C4D9]/30 flex items-center gap-1">
+                                                <i className="fas fa-truck"></i>
+                                                提货
+                                            </button>
+                                        </div>
                                     </div>
                                 )}
                             </div>

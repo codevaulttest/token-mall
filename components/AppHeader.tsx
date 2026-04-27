@@ -3,12 +3,13 @@ import React from 'react';
 interface AppHeaderProps {
     title: string;
     onBack?: () => void;
+    actions?: React.ReactNode;
     children?: React.ReactNode;
 }
 
-export const AppHeader: React.FC<AppHeaderProps> = ({ title, onBack, children }) => (
-    <div className="sticky top-0 z-40 bg-white border-b border-gray-100">
-        <div className="px-4 pb-3.5 pt-[calc(env(safe-area-inset-top)+0.875rem)] flex justify-between items-center text-gray-900">
+export const AppHeader: React.FC<AppHeaderProps> = ({ title, onBack, actions, children }) => (
+    <div className="sticky top-0 z-40 bg-white">
+        <div className="px-4 pb-3.5 pt-[calc(env(safe-area-inset-top)+0.875rem)] flex justify-between items-center text-gray-900 border-b border-gray-200">
             <button
                 type="button"
                 onClick={onBack}
@@ -29,9 +30,16 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ title, onBack, children })
                 </span>
             </div>
         </div>
-        <div className="px-6 pb-4">
-            <h1 className="text-2xl font-extrabold text-gray-900 leading-tight">{title}</h1>
-            {children}
-        </div>
+        {(title || actions) && (
+            <div className="px-6 pt-4 pb-4 flex items-center justify-between">
+                {title && <h1 className="text-xl font-extrabold text-gray-900 leading-tight">{title}</h1>}
+                {actions}
+            </div>
+        )}
+        {children && (
+            <div className="px-4 pt-4 pb-4">
+                {children}
+            </div>
+        )}
     </div>
 );

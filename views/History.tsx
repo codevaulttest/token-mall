@@ -40,11 +40,10 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
     };
 
     return (
-        <div className="bg-[#F7F8FA] min-h-full pb-6">
-            <AppHeader title="记录" onBack={handleBack}>
+        <div className="bg-white min-h-full pb-6">
+            <AppHeader title="" onBack={handleBack}>
                 {/* Main Toggle Switch */}
-                <div className="mt-4">
-                    <div className="bg-gray-100 p-1 rounded-xl flex w-full">
+                <div className="bg-gray-100 p-1 rounded-xl flex w-full">
                         <button
                             onClick={() => setRecordType('redemption')}
                             className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all duration-200 ${recordType === 'redemption' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
@@ -64,7 +63,6 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
                             转让记录
                         </button>
                     </div>
-                </div>
 
                 {/* Sub Tabs for Pickup Only */}
                 {recordType === 'pickup' && (
@@ -95,7 +93,7 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
                     </div>
                 ) : (
                     filteredLogs.map(log => (
-                        <div key={log.id} className="bg-white rounded-xl p-4 shadow-sm border border-gray-50">
+                        <div key={log.id} className="bg-white rounded-xl p-4 shadow-[0_2px_12px_rgba(0,0,0,0.08)] border border-gray-50">
                             <div className="flex justify-between items-center mb-3 pb-3 border-b border-gray-50">
                                 <span className="text-xs text-gray-500">订单号: {log.orderId}</span>
                                 <span className={`text-xs font-bold ${
