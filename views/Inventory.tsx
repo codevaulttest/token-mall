@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useStore } from '../context/StoreContext';
 import { InventoryItem } from '../types';
 import { ImageWithFallback } from '../components/ImageWithFallback';
+import { AppHeader } from '../components/AppHeader';
 
 interface InventoryProps {
     onActionClick: (type: 'transfer' | 'pickup' | 'history' | 'bulk_transfer' | 'bulk_pickup', item?: InventoryItem, bulkItems?: InventoryItem[]) => void;
@@ -71,42 +72,31 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
 
     return (
         <div className="min-h-full relative pb-4">
-            <div className="sticky top-0 bg-white z-40 px-4 py-3 border-b border-gray-50 shadow-sm flex justify-between items-center h-[60px]">
+            <AppHeader title={isSelectionMode ? `已选择 ${selectedIds.size} 件` : '我的库存'} onBack={isSelectionMode ? cancelSelectionMode : () => navigateTo('home')}>
                 {isSelectionMode ? (
-                    <div className="flex items-center justify-between w-full animate-fade-in">
+                    <div className="mt-4 flex items-center justify-between animate-fade-in">
                         <button onClick={cancelSelectionMode} className="text-gray-500 font-medium text-sm">取消</button>
-                        <span className="font-bold text-gray-800">已选择 {selectedIds.size} 件</span>
                         <button onClick={toggleSelectAll} className="text-[#FF6D16] font-medium text-sm">
                             {selectedIds.size === inventory.length ? '取消全选' : '全选'}
                         </button>
                     </div>
                 ) : (
-                    <>
-                        <div className="flex items-center gap-2">
-                            <button onClick={() => navigateTo('home')} className="w-8 h-8 flex items-center justify-center -ml-2 rounded-full active:bg-gray-100 transition">
-                                <i className="fas fa-chevron-left text-lg text-gray-800"></i>
-                            </button>
-                            <h1 className="text-lg font-extrabold text-gray-900">我的库存</h1>
-                        </div>
-                        
-                        {/* Action Buttons moved to header */}
-                        <div className="flex items-center gap-2">
-                            <button 
-                                onClick={() => enterSelectionMode('transfer')}
-                                className="h-8 px-2.5 bg-[#FF6D16]/10 border border-[#FF6D16]/20 text-[#FF6D16] rounded-lg text-xs font-bold active:bg-[#FF6D16]/20 transition flex items-center gap-1.5"
-                            >
-                                <i className="fas fa-paper-plane text-[#FF6D16]"></i> 批量转让
-                            </button>
-                            <button 
-                                onClick={() => enterSelectionMode('pickup')}
-                                className="h-8 px-2.5 bg-[#25C4D9] border border-[#25C4D9] text-white rounded-lg text-xs font-bold active:scale-95 transition flex items-center gap-1.5 shadow-md shadow-[#25C4D9]/20"
-                            >
-                                <i className="fas fa-truck-loading text-white"></i> 批量提货
-                            </button>
-                        </div>
-                    </>
+                    <div className="mt-4 flex items-center gap-2">
+                        <button 
+                            onClick={() => enterSelectionMode('transfer')}
+                            className="h-8 px-2.5 bg-[#FF6D16]/10 border border-[#FF6D16]/20 text-[#FF6D16] rounded-lg text-xs font-bold active:bg-[#FF6D16]/20 transition flex items-center gap-1.5"
+                        >
+                            <i className="fas fa-paper-plane text-[#FF6D16]"></i> 批量转让
+                        </button>
+                        <button 
+                            onClick={() => enterSelectionMode('pickup')}
+                            className="h-8 px-2.5 bg-[#25C4D9] border border-[#25C4D9] text-white rounded-lg text-xs font-bold active:scale-95 transition flex items-center gap-1.5 shadow-md shadow-[#25C4D9]/20"
+                        >
+                            <i className="fas fa-truck-loading text-white"></i> 批量提货
+                        </button>
+                    </div>
                 )}
-            </div>
+            </AppHeader>
 
             <div className="px-4 space-y-4 fade-in pb-24 pt-4">
                 {inventory.length === 0 ? (

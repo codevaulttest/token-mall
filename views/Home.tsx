@@ -35,7 +35,6 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
 
     return (
         <div className="pb-4 bg-white min-h-full">
-            {/* Custom Header with Safe Area Padding */}
             <div className="bg-white px-4 pb-3.5 pt-[calc(env(safe-area-inset-top)+0.875rem)] sticky top-0 z-40 border-b border-gray-100 flex justify-between items-center text-gray-900">
                 <button onClick={handleExitToHost} className="w-10 h-8 flex items-center justify-start active:opacity-60 transition-opacity">
                     <i className="fas fa-chevron-left text-xl"></i>

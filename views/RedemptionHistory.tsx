@@ -1,6 +1,7 @@
 import React from 'react';
 import { useStore } from '../context/StoreContext';
 import { ImageWithFallback } from '../components/ImageWithFallback';
+import { AppHeader } from '../components/AppHeader';
 
 export const RedemptionHistory: React.FC = () => {
     const { logs, navigateTo } = useStore();
@@ -10,14 +11,7 @@ export const RedemptionHistory: React.FC = () => {
 
     return (
         <div className="bg-[#F7F8FA] min-h-full pb-6">
-            <div className="sticky top-0 bg-white z-40 border-b border-gray-100">
-                <div className="flex items-center px-4 py-3">
-                    <button onClick={() => navigateTo('home')} className="w-8 h-8 flex items-center justify-center -ml-2 text-gray-600 active:bg-gray-100 rounded-full transition">
-                        <i className="fas fa-chevron-left"></i>
-                    </button>
-                    <h1 className="flex-1 text-center font-bold text-lg text-gray-800 pr-6">兑换记录</h1>
-                </div>
-            </div>
+            <AppHeader title="兑换记录" onBack={() => navigateTo('home')} />
 
             <div className="p-4 space-y-3 fade-in">
                 {redemptionLogs.length === 0 ? (

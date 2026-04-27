@@ -1,0 +1,37 @@
+import React from 'react';
+
+interface AppHeaderProps {
+    title: string;
+    onBack?: () => void;
+    children?: React.ReactNode;
+}
+
+export const AppHeader: React.FC<AppHeaderProps> = ({ title, onBack, children }) => (
+    <div className="sticky top-0 z-40 bg-white border-b border-gray-100">
+        <div className="px-4 pb-3.5 pt-[calc(env(safe-area-inset-top)+0.875rem)] flex justify-between items-center text-gray-900">
+            <button
+                type="button"
+                onClick={onBack}
+                className="w-10 h-8 flex items-center justify-start active:opacity-60 transition-opacity"
+                aria-label="返回"
+            >
+                <i className="fas fa-chevron-left text-xl"></i>
+            </button>
+            <div className="absolute left-1/2 -translate-x-1/2 font-bold text-lg tracking-wide">通证兑换</div>
+            <div
+                className="h-8 w-[88px] rounded-full border border-gray-200 bg-white flex items-center justify-center gap-3"
+                aria-hidden="true"
+            >
+                <i className="fas fa-ellipsis-h text-base"></i>
+                <span className="h-4 w-px bg-gray-200"></span>
+                <span className="w-5 h-5 rounded-full border-2 border-gray-900 flex items-center justify-center">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gray-900"></span>
+                </span>
+            </div>
+        </div>
+        <div className="px-6 pb-4">
+            <h1 className="text-2xl font-extrabold text-gray-900 leading-tight">{title}</h1>
+            {children}
+        </div>
+    </div>
+);

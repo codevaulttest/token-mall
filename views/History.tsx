@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useStore } from '../context/StoreContext';
 import { ImageWithFallback } from '../components/ImageWithFallback';
+import { AppHeader } from '../components/AppHeader';
 
 interface HistoryProps {
     initialTab?: 'pickup' | 'transfer' | 'redemption';
@@ -40,16 +41,9 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
 
     return (
         <div className="bg-[#F7F8FA] min-h-full pb-6">
-            <div className="sticky top-0 bg-white z-40 border-b border-gray-100 shadow-sm">
-                <div className="flex items-center px-4 py-3">
-                    <button onClick={handleBack} className="w-8 h-8 flex items-center justify-center -ml-2 text-gray-600 active:bg-gray-100 rounded-full transition">
-                        <i className="fas fa-chevron-left"></i>
-                    </button>
-                    <h1 className="flex-1 text-center font-bold text-lg text-gray-800 pr-6">记录</h1>
-                </div>
-                
+            <AppHeader title="记录" onBack={handleBack}>
                 {/* Main Toggle Switch */}
-                <div className="px-4 mb-3">
+                <div className="mt-4">
                     <div className="bg-gray-100 p-1 rounded-xl flex w-full">
                         <button
                             onClick={() => setRecordType('redemption')}
@@ -74,7 +68,7 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
 
                 {/* Sub Tabs for Pickup Only */}
                 {recordType === 'pickup' && (
-                    <div className="flex justify-around px-2 pt-1 pb-0 border-t border-gray-50">
+                    <div className="flex justify-around px-2 pt-2 -mb-4 border-t border-gray-50">
                         {pickupTabs.map(tab => (
                             <div 
                                 key={tab} 
@@ -89,7 +83,7 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
                         ))}
                     </div>
                 )}
-            </div>
+            </AppHeader>
 
             <div className="p-4 space-y-3 fade-in">
                 {filteredLogs.length === 0 ? (
