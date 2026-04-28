@@ -16,9 +16,9 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ title, onBack, actions, ch
                 className="w-10 h-8 flex items-center justify-start active:opacity-60 transition-opacity"
                 aria-label="返回"
             >
-                <i className="fas fa-chevron-left text-xl"></i>
+                <i className="fas fa-chevron-left text-lg"></i>
             </button>
-            <div className="absolute left-1/2 -translate-x-1/2 font-semibold text-lg tracking-[0.02em]">通证兑换</div>
+            <div className="absolute left-1/2 -translate-x-1/2 font-medium text-lg tracking-[0.02em]">通证兑换</div>
             <div
                 className="h-8 w-[88px] rounded-full border border-gray-200 bg-white flex items-center justify-center gap-3"
                 aria-hidden="true"
@@ -37,7 +37,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ title, onBack, actions, ch
             </div>
         )}
         {children && (
-            <div className="px-4 pt-4 pb-4">
+            <div className="px-4 pb-1">
                 {children}
             </div>
         )}

@@ -13,22 +13,19 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
     
     // Bulk Selection State
     const [isSelectionMode, setIsSelectionMode] = useState(false);
-    const [selectionType, setSelectionType] = useState<'transfer' | 'pickup' | null>(null);
     const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
 
-    const enterSelectionMode = (type: 'transfer' | 'pickup') => {
+    const enterSelectionMode = () => {
         if (inventory.length === 0) {
             showToast('暂无库存可操作');
             return;
         }
         setIsSelectionMode(true);
-        setSelectionType(type);
         setSelectedIds(new Set());
     };
 
     const cancelSelectionMode = () => {
         setIsSelectionMode(false);
-        setSelectionType(null);
         setSelectedIds(new Set());
     };
 
@@ -50,7 +47,7 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
         }
     };
 
-    const handleConfirmBulk = () => {
+    const handleBulkAction = (type: 'transfer' | 'pickup') => {
         if (selectedIds.size === 0) {
             showToast('请至少选择一件商品');
             return;
@@ -58,9 +55,9 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
         
         const selectedItems = inventory.filter(i => selectedIds.has(i.inventoryId));
         
-        if (selectionType === 'transfer') {
+        if (type === 'transfer') {
             onActionClick('bulk_transfer', undefined, selectedItems);
-        } else if (selectionType === 'pickup') {
+        } else {
             onActionClick('bulk_pickup', undefined, selectedItems);
         }
         
@@ -73,7 +70,7 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
     return (
         <div className="min-h-full relative pb-4 bg-white">
             <AppHeader
-                title={isSelectionMode ? `已选择 ${selectedIds.size} 件` : '我的库存'}
+                title={isSelectionMode ? '选择商品' : '我的库存'}
                 onBack={isSelectionMode ? cancelSelectionMode : () => navigateTo('home')}
                 actions={isSelectionMode ? (
                     <div className="flex items-center gap-3 animate-fade-in">
@@ -83,30 +80,29 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                         </button>
                     </div>
                 ) : (
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-3">
                         <button
                             onClick={() => navigateTo('history')}
-                            className="h-8 px-2 bg-white border border-[#F5416C]/20 text-[#F5416C] rounded-lg text-xs font-bold active:bg-[#F5416C]/5 transition flex items-center gap-1"
+                            className="flex items-center gap-1 text-gray-500 text-xs font-medium active:text-gray-700 transition"
                         >
-                            <i className="fas fa-clipboard-list text-[#F5416C]"></i> 提货记录
-                        </button>
-                        <button
-                            onClick={() => enterSelectionMode('transfer')}
-                            className="h-8 px-2 bg-blue-50 border border-blue-100 text-blue-500 rounded-lg text-xs font-bold active:bg-blue-100 transition flex items-center gap-1"
-                        >
-                            <i className="fas fa-exchange-alt text-blue-500"></i> 转让
-                        </button>
-                        <button
-                            onClick={() => enterSelectionMode('pickup')}
-                            className="h-8 px-2 bg-[#F5416C] border border-[#F5416C] text-white rounded-lg text-xs font-bold active:scale-95 transition flex items-center gap-1 shadow-md shadow-[#F5416C]/20"
-                        >
-                            <i className="fas fa-truck text-white"></i> 提货
+                            提货记录
+                            <i className="fas fa-chevron-right text-[10px]"></i>
                         </button>
                     </div>
                 )}
-            />
+            >
+                {!isSelectionMode && inventory.length > 0 && (
+                    <button
+                        onClick={enterSelectionMode}
+                        className="flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#F5416C]/15 bg-[#FFF4F7] text-sm font-bold text-[#F5416C] active:bg-[#FFE8EF] transition"
+                    >
+                        <i className="fas fa-tasks text-sm"></i>
+                        批量操作
+                    </button>
+                )}
+            </AppHeader>
 
-            <div className="px-4 space-y-4 fade-in pb-24">
+            <div className={`px-4 space-y-3 fade-in pb-24 ${isSelectionMode ? 'pt-3' : ''}`}>
                 {inventory.length === 0 ? (
                     <div className="text-center text-gray-400 py-20 flex flex-col items-center">
                         <i className="fas fa-box-open text-6xl text-gray-200 mb-4"></i>
@@ -118,36 +114,45 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                         <div 
                             key={item.inventoryId} 
                             onClick={() => isSelectionMode ? toggleSelection(item.inventoryId) : null}
-                            className={`bg-white p-3 rounded-2xl shadow-[0_10px_24px_rgba(15,23,42,0.12)] flex gap-3 transition-all duration-300 ${isSelectionMode ? 'cursor-pointer active:scale-[0.99]' : ''} ${isSelectionMode && selectedIds.has(item.inventoryId) ? (selectionType === 'transfer' ? 'ring-2 ring-blue-400/50 bg-blue-50/60' : 'ring-2 ring-[#F5416C]/50 bg-[#F5416C]/5') : ''}`}
+                            className={`bg-white p-3 rounded-2xl border border-gray-100/80 shadow-[0_6px_18px_rgba(15,23,42,0.06)] flex gap-3 transition-all duration-300 ${isSelectionMode ? 'cursor-pointer active:scale-[0.99]' : ''} ${isSelectionMode && selectedIds.has(item.inventoryId) ? 'ring-2 ring-[#F5416C]/50 bg-[#F5416C]/5' : ''}`}
                         >
                             {/* Selection Checkbox */}
                             {isSelectionMode && (
                                 <div className="flex items-center justify-center w-8">
-                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${selectedIds.has(item.inventoryId) ? (selectionType === 'transfer' ? 'border-blue-500 bg-blue-500' : 'border-[#F5416C] bg-[#F5416C]') : 'border-gray-300'}`}>
+                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${selectedIds.has(item.inventoryId) ? 'border-[#F5416C] bg-[#F5416C]' : 'border-gray-300'}`}>
                                         {selectedIds.has(item.inventoryId) && <i className="fas fa-check text-white text-xs"></i>}
                                     </div>
                                 </div>
                             )}
 
-                            <div className="w-24 h-24 bg-gray-100 rounded-xl flex-shrink-0 overflow-hidden">
+                            <div className="relative w-24 h-24 bg-gray-100 rounded-xl flex-shrink-0 overflow-hidden">
                                 <ImageWithFallback
                                     src={item.img}
                                     alt={item.title}
                                     className="w-full h-full"
                                     imgClassName="object-cover h-full"
                                 />
+                                {item.productType && (
+                                    <span className={`absolute top-1 right-1 text-xs font-bold px-1 py-0.5 rounded-sm ${
+                                        item.productType === '数字商品' ? 'bg-purple-50 text-purple-600 ring-1 ring-purple-200' :
+                                        item.productType === '充值' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200' :
+                                        'bg-[#FFF1F6] text-[#F5416C] ring-1 ring-[#F5416C]/25'
+                                    }`}>{item.productType}</span>
+                                )}
                             </div>
-                            <div className="flex-1 flex flex-col justify-between py-1">
+                            <div className="flex-1 h-24 flex flex-col py-1 min-w-0">
                                 <div>
-                                    <h3 className="font-bold text-gray-800 text-sm line-clamp-2 leading-snug">{item.title}</h3>
+                                    <div className="flex items-start gap-2">
+                                        <h3 className="font-bold text-gray-800 text-sm line-clamp-2 leading-snug flex-1 min-w-0">{item.title}</h3>
+                                        <span
+                                            aria-label={`持有 ${item.count} 件`}
+                                            className="shrink-0 inline-flex items-center justify-center rounded-full border border-[#F5416C]/10 bg-[#FFF0F3] px-2.5 py-0.5 text-xs font-bold leading-5 text-[#F5416C]"
+                                        >
+                                            x{item.count}
+                                        </span>
+                                    </div>
                                     <p className="text-xs text-gray-400 mt-1">{item.specs}</p>
                                 </div>
-                                
-                                {!isSelectionMode && (
-                                    <div className="flex mt-3 items-center">
-                                        <span className="text-xs font-semibold text-[#F5416C]">持有 x{item.count}</span>
-                                    </div>
-                                )}
                             </div>
                         </div>
                     ))
@@ -156,14 +161,29 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
 
             {/* Floating Action Bar for Bulk Selection */}
             {isSelectionMode && (
-                <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 z-[60] slide-up shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
-                     <button 
-                        onClick={handleConfirmBulk}
-                        disabled={selectedIds.size === 0}
-                        className={`w-full py-4 rounded-xl font-bold text-white shadow-lg transition-all active:scale-[0.98] ${selectedIds.size > 0 ? (selectionType === 'transfer' ? 'bg-blue-500 shadow-blue-500/30' : 'bg-[#F5416C] shadow-[#F5416C]/30') : 'bg-gray-300 shadow-none cursor-not-allowed'}`}
-                    >
-                        {selectionType === 'transfer' ? '确认批量转让' : '确认批量提货'} ({selectedIds.size})
-                    </button>
+                <div className="fixed bottom-0 left-0 right-0 z-[60] border-t border-gray-200 bg-white px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-3 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] slide-up">
+                    <div className="flex items-center gap-3">
+                        <div className="min-w-0 flex-1">
+                            <p className="text-xs text-gray-400">已选</p>
+                            <p className="text-base font-extrabold text-gray-900">{selectedIds.size} 件</p>
+                        </div>
+                        <button
+                            onClick={() => handleBulkAction('transfer')}
+                            disabled={selectedIds.size === 0}
+                            className={`inline-flex h-11 min-w-[88px] items-center justify-center gap-2 rounded-xl border px-4 text-sm font-bold transition active:scale-[0.98] ${selectedIds.size > 0 ? 'border-blue-100 bg-blue-50 text-blue-500 active:bg-blue-100' : 'border-gray-100 bg-gray-100 text-gray-300 cursor-not-allowed'}`}
+                        >
+                            <i className="fas fa-exchange-alt text-sm"></i>
+                            转让
+                        </button>
+                        <button
+                            onClick={() => handleBulkAction('pickup')}
+                            disabled={selectedIds.size === 0}
+                            className={`inline-flex h-11 min-w-[96px] items-center justify-center gap-2 rounded-xl px-4 text-sm font-bold text-white shadow-lg transition active:scale-[0.98] ${selectedIds.size > 0 ? 'bg-[#F5416C] shadow-[#F5416C]/25' : 'bg-gray-300 shadow-none cursor-not-allowed'}`}
+                        >
+                            <i className="fas fa-truck text-sm"></i>
+                            提货
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
