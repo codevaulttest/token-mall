@@ -183,7 +183,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
 
         return (
              <div onClick={handleClick} className="w-full bg-white border border-gray-200 rounded-2xl p-4 flex items-center gap-3 cursor-pointer hover:bg-gray-50 transition active:scale-[0.99] shadow-sm relative">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-lg ${!address && !hasAddresses ? 'bg-gray-100 text-gray-500' : 'bg-[#FF6D16]/10 text-[#FF6D16]'}`}>
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-lg ${!address && !hasAddresses ? 'bg-gray-100 text-gray-500' : 'bg-[#F5416C]/10 text-[#F5416C]'}`}>
                     <i className={`fas ${!address && !hasAddresses ? 'fa-plus' : 'fa-map-marker-alt'}`}></i>
                 </div>
                 {address ? (
@@ -233,15 +233,15 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                             </div>
                         ) : (
                             addresses.map(addr => (
-                                <div key={addr.id} onClick={() => { setSelectedAddressId(addr.id); setModalView('main'); }} className={`p-4 rounded-xl border flex items-center gap-3 cursor-pointer transition-all ${selectedAddressId === addr.id ? 'border-[#FF6D16] bg-[#FF6D16]/5' : 'border-gray-100 bg-gray-50'}`}>
-                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${selectedAddressId === addr.id ? 'border-[#FF6D16] bg-[#FF6D16]' : 'border-gray-300'}`}>
+                                <div key={addr.id} onClick={() => { setSelectedAddressId(addr.id); setModalView('main'); }} className={`p-4 rounded-xl border flex items-center gap-3 cursor-pointer transition-all ${selectedAddressId === addr.id ? 'border-[#F5416C] bg-[#F5416C]/5' : 'border-gray-100 bg-gray-50'}`}>
+                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${selectedAddressId === addr.id ? 'border-[#F5416C] bg-[#F5416C]' : 'border-gray-300'}`}>
                                         {selectedAddressId === addr.id && <i className="fas fa-check text-white text-xs"></i>}
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center gap-2 mb-1">
                                             <span className="font-bold text-gray-800 truncate">{addr.name}</span>
                                             <span className="text-gray-500 text-sm">{addr.phone}</span>
-                                            {addr.isDefault && <span className="bg-[#FF6D16]/10 text-[#FF6D16] text-xs px-1.5 rounded flex-shrink-0">默认</span>}
+                                            {addr.isDefault && <span className="bg-[#F5416C]/10 text-[#F5416C] text-xs px-1.5 rounded flex-shrink-0">默认</span>}
                                         </div>
                                         <div className="text-xs text-gray-500 leading-snug break-words">{addr.fullAddress}</div>
                                     </div>
@@ -257,7 +257,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                             ))
                         )}
                     </div>
-                    <button onClick={() => { setNewAddressForm({ name: '', phone: '', region: '', detail: '', isDefault: false }); setModalView('address_form'); }} className="w-full py-3.5 bg-[#FF6D16] text-white rounded-xl font-bold mt-4 shadow-md active:scale-[0.98] transition"><i className="fas fa-plus mr-2"></i> 新增地址</button>
+                    <button onClick={() => { setNewAddressForm({ name: '', phone: '', region: '', detail: '', isDefault: false }); setModalView('address_form'); }} className="w-full py-3.5 bg-[#F5416C] text-white rounded-xl font-bold mt-4 shadow-md active:scale-[0.98] transition"><i className="fas fa-plus mr-2"></i> 新增地址</button>
                 </div>
             </div>
         );
@@ -296,13 +296,13 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                         <button onClick={() => setModalView(addresses.length > 0 ? 'address_list' : 'main')} className="text-gray-400"><i className="fas fa-times"></i></button>
                     </div>
                     <div className="space-y-4 mb-8">
-                        <div><label className="text-xs font-medium text-gray-500 ml-1">收货人</label><input type="text" value={newAddressForm.name} onChange={e => setNewAddressForm({...newAddressForm, name: e.target.value})} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 mt-1 focus:outline-[#FF6D16]" placeholder="请填写收货人姓名"/></div>
-                        <div><label className="text-xs font-medium text-gray-500 ml-1">手机号码</label><input type="tel" value={newAddressForm.phone} onChange={e => { const val = e.target.value.replace(/[^\d]/g, ''); setNewAddressForm({...newAddressForm, phone: val}); }} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 mt-1 focus:outline-[#FF6D16]" placeholder="请填写手机号码"/></div>
+                        <div><label className="text-xs font-medium text-gray-500 ml-1">收货人</label><input type="text" value={newAddressForm.name} onChange={e => setNewAddressForm({...newAddressForm, name: e.target.value})} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 mt-1 focus:outline-[#F5416C]" placeholder="请填写收货人姓名"/></div>
+                        <div><label className="text-xs font-medium text-gray-500 ml-1">手机号码</label><input type="tel" value={newAddressForm.phone} onChange={e => { const val = e.target.value.replace(/[^\d]/g, ''); setNewAddressForm({...newAddressForm, phone: val}); }} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 mt-1 focus:outline-[#F5416C]" placeholder="请填写手机号码"/></div>
                         <div><label className="text-xs font-medium text-gray-500 ml-1">所在地区</label><div onClick={() => { setPickerHistory([]); setModalView('region_picker'); }} className={`w-full border rounded-xl px-4 py-3 mt-1 flex justify-between items-center transition-colors cursor-pointer ${newAddressForm.region ? 'bg-white border-gray-200 text-gray-800' : 'bg-gray-50 border-gray-200 text-gray-400'}`}><span>{newAddressForm.region || '省 / 市 / 区（县）'}</span><i className="fas fa-chevron-right text-gray-300 text-xs"></i></div></div>
-                        <div><label className="text-xs font-medium text-gray-500 ml-1">详细地址</label><textarea value={newAddressForm.detail} onChange={e => setNewAddressForm({...newAddressForm, detail: e.target.value})} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 mt-1 focus:outline-[#FF6D16] h-20 resize-none" placeholder="街道、楼牌号等"></textarea></div>
-                        <div className="flex items-center gap-2 mt-2" onClick={() => setNewAddressForm({...newAddressForm, isDefault: !newAddressForm.isDefault})}><div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${newAddressForm.isDefault ? 'bg-[#FF6D16] border-[#FF6D16]' : 'border-gray-300'}`}>{newAddressForm.isDefault && <i className="fas fa-check text-white text-xs"></i>}</div><span className="text-sm text-gray-600">设为默认地址</span></div>
+                        <div><label className="text-xs font-medium text-gray-500 ml-1">详细地址</label><textarea value={newAddressForm.detail} onChange={e => setNewAddressForm({...newAddressForm, detail: e.target.value})} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 mt-1 focus:outline-[#F5416C] h-20 resize-none" placeholder="街道、楼牌号等"></textarea></div>
+                        <div className="flex items-center gap-2 mt-2" onClick={() => setNewAddressForm({...newAddressForm, isDefault: !newAddressForm.isDefault})}><div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${newAddressForm.isDefault ? 'bg-[#F5416C] border-[#F5416C]' : 'border-gray-300'}`}>{newAddressForm.isDefault && <i className="fas fa-check text-white text-xs"></i>}</div><span className="text-sm text-gray-600">设为默认地址</span></div>
                     </div>
-                    <button onClick={handleSaveAddress} disabled={!newAddressForm.name || !newAddressForm.phone || !newAddressForm.region || !newAddressForm.detail} className={`w-full py-3.5 rounded-xl font-bold shadow-md transition ${!newAddressForm.name || !newAddressForm.region ? 'bg-gray-200 text-gray-400' : 'bg-[#FF6D16] text-white active:scale-[0.98]'}`}>保存并使用</button>
+                    <button onClick={handleSaveAddress} disabled={!newAddressForm.name || !newAddressForm.phone || !newAddressForm.region || !newAddressForm.detail} className={`w-full py-3.5 rounded-xl font-bold shadow-md transition ${!newAddressForm.name || !newAddressForm.region ? 'bg-gray-200 text-gray-400' : 'bg-[#F5416C] text-white active:scale-[0.98]'}`}>保存并使用</button>
                 </div>
             </div>
         );
@@ -326,20 +326,20 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                                 <div key={item.inventoryId} className="flex gap-3 bg-white p-3 rounded-lg mb-2 last:mb-0 shadow-sm items-center">
                                     <div className="w-12 h-12 bg-gray-100 rounded-md overflow-hidden shrink-0"><ImageWithFallback src={item.img} className="w-full h-full" imgClassName="object-cover h-full" /></div>
                                     <div className="flex-1 flex flex-col justify-center min-w-0"><div className="text-xs font-bold text-gray-800 line-clamp-1">{item.title}</div><div className="text-xs text-gray-400">{item.specs}</div></div>
-                                    <div className="flex items-center gap-2"><div className="flex items-center bg-gray-50 rounded-lg border border-gray-100 h-8"><button onClick={() => handleBulkQuantityChange(item.inventoryId, -1, item.count)} className={`w-8 h-full flex items-center justify-center text-gray-500 transition ${currentQty <= 0 ? 'opacity-30' : 'active:bg-gray-200'}`} disabled={currentQty <= 0}><i className="fas fa-minus text-xs"></i></button><span className={`w-8 text-center text-xs font-bold ${currentQty === 0 ? 'text-gray-300' : 'text-gray-800'}`}>{currentQty}</span><button onClick={() => handleBulkQuantityChange(item.inventoryId, 1, item.count)} className={`w-8 h-full flex items-center justify-center text-gray-500 transition ${currentQty >= item.count ? 'opacity-30' : 'active:bg-gray-200'}`} disabled={currentQty >= item.count}><i className="fas fa-plus text-xs"></i></button></div><button onClick={() => handleSetBulkMax(item.inventoryId, item.count)} className="text-xs text-[#FF6D16] font-medium px-1 py-1 active:opacity-60 whitespace-nowrap">最大</button></div>
+                                    <div className="flex items-center gap-2"><div className="flex items-center bg-gray-50 rounded-lg border border-gray-100 h-8"><button onClick={() => handleBulkQuantityChange(item.inventoryId, -1, item.count)} className={`w-8 h-full flex items-center justify-center text-gray-500 transition ${currentQty <= 0 ? 'opacity-30' : 'active:bg-gray-200'}`} disabled={currentQty <= 0}><i className="fas fa-minus text-xs"></i></button><span className={`w-8 text-center text-xs font-bold ${currentQty === 0 ? 'text-gray-300' : 'text-gray-800'}`}>{currentQty}</span><button onClick={() => handleBulkQuantityChange(item.inventoryId, 1, item.count)} className={`w-8 h-full flex items-center justify-center text-gray-500 transition ${currentQty >= item.count ? 'opacity-30' : 'active:bg-gray-200'}`} disabled={currentQty >= item.count}><i className="fas fa-plus text-xs"></i></button></div><button onClick={() => handleSetBulkMax(item.inventoryId, item.count)} className="text-xs text-[#F5416C] font-medium px-1 py-1 active:opacity-60 whitespace-nowrap">最大</button></div>
                                 </div>
                             );
                         })}
                     </div>
                     <div className="space-y-5 shrink-0">
                         {isTransfer ? (
-                             <div><label className="block text-xs font-medium text-gray-700 mb-1.5 ml-1">接收人账号</label><div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 px-3 focus-within:bg-white focus-within:border-[#FF6D16] focus-within:ring-2 focus-within:ring-[#FF6D16]/10 transition-all"><i className="fas fa-user text-gray-400 mr-2"></i><input type="text" value={info} onChange={e => setInfo(e.target.value)} placeholder="请输入接收人码库账号/手机号" className="flex-1 bg-transparent py-3.5 text-sm focus:outline-none font-medium" /><div className="w-px h-5 bg-gray-300 mx-3"></div><button className="text-[#FF6D16] text-xs font-bold whitespace-nowrap flex items-center gap-1.5 active:opacity-60 transition-opacity"><i className="fas fa-address-book"></i> 地址簿</button></div></div>
+                             <div><label className="block text-xs font-medium text-gray-700 mb-1.5 ml-1">接收人账号</label><div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 px-3 focus-within:bg-white focus-within:border-[#F5416C] focus-within:ring-2 focus-within:ring-[#F5416C]/10 transition-all"><i className="fas fa-user text-gray-400 mr-2"></i><input type="text" value={info} onChange={e => setInfo(e.target.value)} placeholder="请输入接收人码库账号/手机号" className="flex-1 bg-transparent py-3.5 text-sm focus:outline-none font-medium" /><div className="w-px h-5 bg-gray-300 mx-3"></div><button className="text-[#F5416C] text-xs font-bold whitespace-nowrap flex items-center gap-1.5 active:opacity-60 transition-opacity"><i className="fas fa-address-book"></i> 地址簿</button></div></div>
                         ) : (
-                            <div><label className="block text-xs font-medium text-gray-700 mb-1.5 ml-1">收货地址</label>{renderAddressCard(currentAddress)}<div className="mt-3 flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg"><span className="text-xs font-medium text-gray-600">快递费 (10 DOS/件)</span><span className="text-sm font-bold text-[#FF6D16]">{totalCount * 10} DOS</span></div></div>
+                            <div><label className="block text-xs font-medium text-gray-700 mb-1.5 ml-1">收货地址</label>{renderAddressCard(currentAddress)}<div className="mt-3 flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg"><span className="text-xs font-medium text-gray-600">快递费 (10 DOS/件)</span><span className="text-sm font-bold text-[#F5416C]">{totalCount * 10} DOS</span></div></div>
                         )}
                     </div>
                     <div className="mt-8 shrink-0">
-                        <button onClick={() => { const payload = selectedItems.map(i => ({ inventoryId: i.inventoryId, count: bulkQuantities[i.inventoryId] ?? 0 })).filter(i => i.count > 0); if (payload.length === 0) return; if (isTransfer) { bulkTransferProduct(payload, info); onClose(); } else { if (!selectedAddressId) { alert('请选择收货地址'); return; } const addressInfo = `${currentAddress?.name} ${currentAddress?.phone} ${currentAddress?.fullAddress}`; bulkPickupProduct(payload, addressInfo); onClose(); } }} disabled={totalCount === 0} className={`w-full py-4 rounded-xl font-bold active:scale-[0.98] transition shadow-md ${totalCount === 0 ? 'bg-gray-300 text-white cursor-not-allowed shadow-none' : (isTransfer ? 'bg-[#FF6D16] text-white shadow-[#FF6D16]/30' : 'bg-[#25C4D9] text-white shadow-[#25C4D9]/30')}`}>{isTransfer ? '确认批量转让' : '确认提交批量提货'}</button>
+                        <button onClick={() => { const payload = selectedItems.map(i => ({ inventoryId: i.inventoryId, count: bulkQuantities[i.inventoryId] ?? 0 })).filter(i => i.count > 0); if (payload.length === 0) return; if (isTransfer) { bulkTransferProduct(payload, info); onClose(); } else { if (!selectedAddressId) { alert('请选择收货地址'); return; } const addressInfo = `${currentAddress?.name} ${currentAddress?.phone} ${currentAddress?.fullAddress}`; bulkPickupProduct(payload, addressInfo); onClose(); } }} disabled={totalCount === 0} className={`w-full py-4 rounded-xl font-bold active:scale-[0.98] transition shadow-md ${totalCount === 0 ? 'bg-gray-300 text-white cursor-not-allowed shadow-none' : (isTransfer ? 'bg-[#F5416C] text-white shadow-[#F5416C]/30' : 'bg-[#25C4D9] text-white shadow-[#25C4D9]/30')}`}>{isTransfer ? '确认批量转让' : '确认提交批量提货'}</button>
                     </div>
                 </div>
             </div>
@@ -420,7 +420,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
         const renderPriceHeader = () => {
             if (hasFixedTokenPrice) {
                 return (
-                    <div className="flex flex-wrap items-center gap-2 mb-5 text-[#FF6D16]">
+                    <div className="flex flex-wrap items-center gap-2 mb-5 text-[#F5416C]">
                         {fixedTokenEntries.map(([token, amount], idx) => (
                             <React.Fragment key={token}>
                                 {idx > 0 && <span className="text-xl font-bold">+</span>}
@@ -438,7 +438,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                 return (
                     <div className="flex items-center justify-between mb-5">
                         <div className="flex items-center gap-2">
-                            <div className="flex items-baseline gap-1.5 text-[#FF6D16]">
+                            <div className="flex items-baseline gap-1.5 text-[#F5416C]">
                                 <span className="text-3xl font-extrabold tracking-tight">{mixFec.toLocaleString()} <span className="text-lg font-bold">FEC</span></span>
                                 <span className="text-xl font-bold">+</span>
                                 <span className="text-3xl font-extrabold tracking-tight">{mixSlc.toLocaleString()} <span className="text-lg font-bold">SLC</span></span>
@@ -450,8 +450,8 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                 return (
                     <div className="flex items-center justify-between mb-5">
                          <div className="flex items-center">
-                            <span className="text-3xl font-extrabold text-[#FF6D16] tracking-tight">{dosAmt.toLocaleString()}</span>
-                            <span className="text-lg font-bold text-[#FF6D16] ml-2">DOS</span>
+                            <span className="text-3xl font-extrabold text-[#F5416C] tracking-tight">{dosAmt.toLocaleString()}</span>
+                            <span className="text-lg font-bold text-[#F5416C] ml-2">DOS</span>
                         </div>
                     </div>
                 )
@@ -459,8 +459,8 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                  return (
                     <div className="flex items-center justify-between mb-5">
                         <div className="flex items-center">
-                            <span className="text-3xl font-extrabold text-[#FF6D16] tracking-tight">{(p.price * fecRate).toLocaleString()}</span>
-                            <span className="text-lg font-bold text-[#FF6D16] ml-2">FEC</span>
+                            <span className="text-3xl font-extrabold text-[#F5416C] tracking-tight">{(p.price * fecRate).toLocaleString()}</span>
+                            <span className="text-lg font-bold text-[#F5416C] ml-2">FEC</span>
                         </div>
                     </div>
                 )
@@ -515,7 +515,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                                     </div>
                                     <div className="flex justify-between items-center">
                                         <span className="text-xs font-medium text-gray-500">快递费 (10 DOS/件)</span>
-                                        <span className="text-sm font-bold text-[#FF6D16]">{inputCount * 10} DOS</span>
+                                        <span className="text-sm font-bold text-[#F5416C]">{inputCount * 10} DOS</span>
                                     </div>
                                 </div>
 
@@ -533,7 +533,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                                                 onClick={() => setPaymentMethod(option.id as any)}
                                                 className={`flex items-center justify-between p-3.5 rounded-xl border transition-all cursor-pointer active:scale-[0.99] ${
                                                     isSelected 
-                                                        ? 'bg-[#FF6D16]/5 border-[#FF6D16] shadow-sm' 
+                                                        ? 'bg-[#F5416C]/5 border-[#F5416C] shadow-sm' 
                                                         : 'border-gray-200 bg-white hover:border-gray-300'
                                                 }`}
                                             >
@@ -546,11 +546,11 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                                                         ))}
                                                     </div>
                                                     <div className="flex flex-col">
-                                                        <span className={`font-bold text-sm ${isSelected ? 'text-[#FF6D16]' : 'text-gray-800'}`}>{option.label}</span>
+                                                        <span className={`font-bold text-sm ${isSelected ? 'text-[#F5416C]' : 'text-gray-800'}`}>{option.label}</span>
                                                         <span className="text-xs text-gray-400 mt-1">{option.balanceText}</span>
                                                     </div>
                                                 </div>
-                                                <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${isSelected ? 'bg-[#FF6D16] border-[#FF6D16]' : 'border-gray-300 bg-white'}`}>
+                                                <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${isSelected ? 'bg-[#F5416C] border-[#F5416C]' : 'border-gray-300 bg-white'}`}>
                                                     <div className={`w-2 h-2 bg-white rounded-full transition-transform ${isSelected ? 'scale-100' : 'scale-0'}`}></div>
                                                 </div>
                                             </div>
@@ -590,7 +590,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                                 <span className="text-sm font-bold text-gray-800">合计</span>
                                 <div className="flex items-center gap-2">
                                     {Object.entries(calculatedAmounts).map(([token, amount], idx) => (
-                                        <div key={token} className="flex items-baseline text-[#FF6D16]">
+                                        <div key={token} className="flex items-baseline text-[#F5416C]">
                                             {idx > 0 && <span className="text-gray-400 text-xs mr-2">+</span>}
                                             <span className="text-xl font-extrabold">{amount.toLocaleString()}</span>
                                             <span className="text-xs font-bold ml-1">{token}</span>
@@ -613,7 +613,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                             className={`w-full py-4 rounded-xl font-bold text-base shadow-lg transition flex items-center justify-center ${
                                 step === 2 && !canSubmit
                                     ? 'bg-gray-300 text-white cursor-not-allowed shadow-none'
-                                    : 'bg-[#FF6D16] text-white shadow-[#FF6D16]/30 active:scale-[0.98]'
+                                    : 'bg-[#F5416C] text-white shadow-[#F5416C]/30 active:scale-[0.98]'
                             }`}
                         >
                             <i className="fas fa-shopping-bag mr-2"></i> {step === 1 ? '立即兑换' : (canSubmit ? '确认兑换入库' : '请检查支付方式')}
@@ -638,7 +638,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                     <h3 className="text-lg font-bold mb-6 text-center">申请提货</h3>
                     
                     <div className="bg-gray-50 p-4 rounded-xl mb-5 flex items-center gap-4">
-                        <div className="bg-white p-2 rounded-lg shadow-sm"><i className="fas fa-box text-[#FF6D16]"></i></div>
+                        <div className="bg-white p-2 rounded-lg shadow-sm"><i className="fas fa-box text-[#F5416C]"></i></div>
                         <div className="flex-1 text-sm font-medium">
                             <div className="truncate">{invItem.title}</div>
                             <div className="text-xs text-gray-400 mt-1">{invItem.specs}</div>
@@ -675,13 +675,13 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                                         <i className="fas fa-plus text-xs"></i>
                                     </button>
                                 </div>
-                                <button onClick={() => setInputCount(invItem.count)} className="text-[#FF6D16] font-bold text-sm px-2 py-2 active:bg-orange-50 rounded-lg transition whitespace-nowrap">最大</button>
+                                <button onClick={() => setInputCount(invItem.count)} className="text-[#F5416C] font-bold text-sm px-2 py-2 active:bg-pink-50 rounded-lg transition whitespace-nowrap">最大</button>
                             </div>
                         </div>
 
                         <div className="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg">
                              <span className="text-xs font-medium text-gray-600">快递费 (10 DOS/件)</span>
-                             <span className="text-sm font-bold text-[#FF6D16]">{inputCount * 10} DOS</span>
+                             <span className="text-sm font-bold text-[#F5416C]">{inputCount * 10} DOS</span>
                         </div>
                         
                         <div>
@@ -719,8 +719,8 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                     <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
                     <h3 className="text-lg font-bold mb-6 text-center">转让商品</h3>
                     
-                     <div className="bg-[#FF6D16]/5 border border-[#FF6D16]/10 p-4 rounded-xl mb-5 flex items-center gap-3">
-                        <div className="bg-white p-2 rounded-lg shadow-sm"><i className="fas fa-gift text-[#FF6D16]"></i></div>
+                     <div className="bg-[#F5416C]/5 border border-[#F5416C]/10 p-4 rounded-xl mb-5 flex items-center gap-3">
+                        <div className="bg-white p-2 rounded-lg shadow-sm"><i className="fas fa-gift text-[#F5416C]"></i></div>
                         <div className="flex-1 text-sm font-medium">
                             <div className="truncate">{invItem.title}</div>
                             <div className="text-xs text-gray-400 mt-1">{invItem.specs}</div>
@@ -757,13 +757,13 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                                         <i className="fas fa-plus text-xs"></i>
                                     </button>
                                 </div>
-                                <button onClick={() => setInputCount(invItem.count)} className="text-[#FF6D16] font-bold text-sm px-2 py-2 active:bg-orange-50 rounded-lg transition whitespace-nowrap">最大</button>
+                                <button onClick={() => setInputCount(invItem.count)} className="text-[#F5416C] font-bold text-sm px-2 py-2 active:bg-pink-50 rounded-lg transition whitespace-nowrap">最大</button>
                             </div>
                         </div>
 
                         <div>
                             <label className="block text-xs font-medium text-gray-700 mb-1.5 ml-1">接收人账号</label>
-                            <div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 px-3 focus-within:bg-white focus-within:border-[#FF6D16] focus-within:ring-2 focus-within:ring-[#FF6D16]/10 transition-all">
+                            <div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 px-3 focus-within:bg-white focus-within:border-[#F5416C] focus-within:ring-2 focus-within:ring-[#F5416C]/10 transition-all">
                                 <i className="fas fa-user text-gray-400 mr-2"></i>
                                 <input 
                                     type="text" 
@@ -773,7 +773,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                                     className="flex-1 bg-transparent py-3.5 text-sm focus:outline-none font-medium" 
                                 />
                                 <div className="w-px h-5 bg-gray-300 mx-3"></div>
-                                <button className="text-[#FF6D16] text-xs font-bold whitespace-nowrap flex items-center gap-1.5 active:opacity-60 transition-opacity">
+                                <button className="text-[#F5416C] text-xs font-bold whitespace-nowrap flex items-center gap-1.5 active:opacity-60 transition-opacity">
                                     <i className="fas fa-address-book"></i> 地址簿
                                 </button>
                             </div>
@@ -783,7 +783,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                     <div className="mt-8">
                         <button 
                             onClick={() => { transferProduct(invItem.inventoryId, inputCount, info); onClose(); }} 
-                            className="w-full bg-[#FF6D16] text-white py-4 rounded-xl font-bold active:scale-[0.98] transition shadow-lg shadow-[#FF6D16]/30"
+                            className="w-full bg-[#F5416C] text-white py-4 rounded-xl font-bold active:scale-[0.98] transition shadow-lg shadow-[#F5416C]/30"
                         >
                             确认转让
                         </button>

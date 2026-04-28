@@ -4,8 +4,8 @@ const COMMON_DESC = '这里是商品简介';
 
 // Mock Exchange Rates: How many Tokens = 1 CNY
 export const TOKENS: TokenConfig[] = [
-    { id: 'FEC', name: 'FEC', rate: 20, color: '#FF6D16' },
-    { id: 'SLC', name: 'SLC', rate: 1, color: '#FF6D16' },
+    { id: 'FEC', name: 'FEC', rate: 20, color: '#F5416C' },
+    { id: 'SLC', name: 'SLC', rate: 1, color: '#F5416C' },
     { id: 'DOS', name: 'DOS', rate: 10, color: '#3B82F6' },
     { id: 'CNV', name: 'CNV', rate: 5, color: '#10B981' },
 ];

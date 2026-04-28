@@ -41,7 +41,7 @@ export const RedemptionHistory: React.FC = () => {
                                         <h3 className="font-bold text-gray-800 text-sm line-clamp-2">{log.item}</h3>
                                     </div>
                                     <div className="flex justify-between items-end mt-2">
-                                        <span className="text-xs text-[#FF6D16] bg-[#FF6D16]/10 px-1.5 py-0.5 rounded">{log.type}</span>
+                                        <span className="text-xs text-[#F5416C] bg-[#F5416C]/10 px-1.5 py-0.5 rounded">{log.type}</span>
                                         <span className="text-sm text-gray-600">数量: {log.count}</span>
                                     </div>
                                 </div>

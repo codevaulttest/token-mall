@@ -18,7 +18,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ title, onBack, actions, ch
             >
                 <i className="fas fa-chevron-left text-xl"></i>
             </button>
-            <div className="absolute left-1/2 -translate-x-1/2 font-bold text-lg tracking-wide">通证兑换</div>
+            <div className="absolute left-1/2 -translate-x-1/2 font-semibold text-lg tracking-wide">通证兑换</div>
             <div
                 className="h-8 w-[88px] rounded-full border border-gray-200 bg-white flex items-center justify-center gap-3"
                 aria-hidden="true"

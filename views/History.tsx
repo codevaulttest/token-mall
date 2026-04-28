@@ -71,11 +71,11 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
                             <div 
                                 key={tab} 
                                 onClick={() => setActiveTab(tab)}
-                                className={`relative pb-3 pt-2 px-2 text-sm font-medium transition-colors cursor-pointer ${activeTab === tab ? 'text-[#FF6D16]' : 'text-gray-500'}`}
+                                className={`relative pb-3 pt-2 px-2 text-sm font-medium transition-colors cursor-pointer ${activeTab === tab ? 'text-[#F5416C]' : 'text-gray-500'}`}
                             >
                                 {tab}
                                 {activeTab === tab && (
-                                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#FF6D16] rounded-full"></div>
+                                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#F5416C] rounded-full"></div>
                                 )}
                             </div>
                         ))}
@@ -98,7 +98,7 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
                                 <span className="text-xs text-gray-500">订单号: {log.orderId}</span>
                                 <span className={`text-xs font-bold ${
                                     recordType === 'transfer' ? 'text-blue-500' : 
-                                    (recordType === 'redemption' ? 'text-green-500' : 'text-[#FF6D16]')
+                                    (recordType === 'redemption' ? 'text-green-500' : 'text-[#F5416C]')
                                 }`}>
                                     {log.status}
                                 </span>
@@ -120,7 +120,7 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
                                     <div className="flex justify-between items-end mt-2">
                                         <span className={`text-xs px-1.5 py-0.5 rounded border ${
                                             recordType === 'transfer' ? 'bg-blue-50 text-blue-500 border-blue-100' :
-                                            'bg-[#FF6D16]/5 text-[#FF6D16] border-[#FF6D16]/10'
+                                            'bg-[#F5416C]/5 text-[#F5416C] border-[#F5416C]/10'
                                         }`}>
                                             {log.type}
                                         </span>
