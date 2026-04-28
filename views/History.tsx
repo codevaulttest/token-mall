@@ -41,47 +41,25 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
 
     return (
         <div className="bg-[#FFF3F6] min-h-full pb-6">
-            <AppHeader title="" onBack={handleBack} contentClassName="bg-[#FFF3F6]" childrenClassName="pt-3 pb-0">
-                {/* Main Toggle Switch */}
-                <div className="bg-white p-1 rounded-xl flex w-full shadow-sm">
-                        <button
-                            onClick={() => setRecordType('redemption')}
-                            className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all duration-200 ${recordType === 'redemption' ? 'bg-[#F5416C] text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-                        >
-                            兑换记录
-                        </button>
-                        <button
-                            onClick={() => setRecordType('pickup')}
-                            className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all duration-200 ${recordType === 'pickup' ? 'bg-[#F5416C] text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-                        >
-                            提货记录
-                        </button>
-                        <button
-                            onClick={() => setRecordType('transfer')}
-                            className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all duration-200 ${recordType === 'transfer' ? 'bg-[#F5416C] text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-                        >
-                            转让记录
-                        </button>
-                    </div>
+            <AppHeader title="" onBack={handleBack} />
 
-                {/* Sub Tabs for Pickup Only */}
-                {recordType === 'pickup' && (
-                    <div className="flex justify-around px-2 pt-2 border-t border-gray-50">
-                        {pickupTabs.map(tab => (
-                            <div 
-                                key={tab} 
-                                onClick={() => setActiveTab(tab)}
-                                className={`relative pb-3 pt-2 px-2 text-sm font-medium transition-colors cursor-pointer ${activeTab === tab ? 'text-[#F5416C]' : 'text-gray-500'}`}
-                            >
-                                {tab}
-                                {activeTab === tab && (
-                                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#F5416C] rounded-full"></div>
-                                )}
-                            </div>
-                        ))}
+            <div className="px-6 pt-4 pb-2 flex items-center justify-between">
+                <h1 className="text-xl font-extrabold text-gray-900 leading-tight">提货记录</h1>
+            </div>
+            <div className="flex justify-around px-2 border-b border-gray-100">
+                {pickupTabs.map(tab => (
+                    <div
+                        key={tab}
+                        onClick={() => setActiveTab(tab)}
+                        className={`relative pb-3 pt-2 px-2 text-sm font-medium transition-colors cursor-pointer ${activeTab === tab ? 'text-[#F5416C]' : 'text-gray-500'}`}
+                    >
+                        {tab}
+                        {activeTab === tab && (
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#F5416C] rounded-full"></div>
+                        )}
                     </div>
-                )}
-            </AppHeader>
+                ))}
+            </div>
 
             <div className="p-4 space-y-3 fade-in">
                 {filteredLogs.length === 0 ? (
@@ -117,14 +95,8 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
                                     <div className="flex justify-between items-start gap-2">
                                         <h3 className="font-bold text-gray-800 text-sm line-clamp-2">{log.item}</h3>
                                     </div>
-                                    <div className="flex justify-between items-end mt-2">
-                                        <span className={`text-xs px-1.5 py-0.5 rounded border ${
-                                            recordType === 'transfer' ? 'bg-blue-50 text-blue-500 border-blue-100' :
-                                            'bg-[#F5416C]/5 text-[#F5416C] border-[#F5416C]/10'
-                                        }`}>
-                                            {log.type}
-                                        </span>
-                                        <span className="text-sm text-gray-600 font-medium">x {log.count}</span>
+                                    <div className="mt-2">
+                                        <span className="text-sm font-bold text-gray-500">x {log.count}</span>
                                     </div>
                                 </div>
                             </div>
