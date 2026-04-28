@@ -381,6 +381,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
         const mixSlc = Math.ceil(totalCNY * 0.2 * slcRate);
         const dosAmt = Math.ceil(totalCNY * dosRate);
         const cnvAmt = Math.ceil(totalCNY * getRate('CNV'));
+        const priceHeaderClass = 'inline-flex flex-wrap items-center gap-x-2 gap-y-1 bg-[#F5416C] text-white px-3 py-2 rounded mb-5';
 
         // Payment Options Config
         const paymentOptions = hasFixedTokenPrice
@@ -420,7 +421,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
         const renderPriceHeader = () => {
             if (hasFixedTokenPrice) {
                 return (
-                    <div className="flex flex-wrap items-center gap-2 mb-5 text-[#F5416C]">
+                    <div className={priceHeaderClass}>
                         {fixedTokenEntries.map(([token, amount], idx) => (
                             <React.Fragment key={token}>
                                 {idx > 0 && <span className="text-xl font-bold">+</span>}
@@ -436,32 +437,24 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
 
             if (p.displayCurrency === 'MIX') {
                 return (
-                    <div className="flex items-center justify-between mb-5">
-                        <div className="flex items-center gap-2">
-                            <div className="flex items-baseline gap-1.5 text-[#F5416C]">
-                                <span className="text-3xl font-extrabold tracking-tight">{mixFec.toLocaleString()} <span className="text-lg font-bold">FEC</span></span>
-                                <span className="text-xl font-bold">+</span>
-                                <span className="text-3xl font-extrabold tracking-tight">{mixSlc.toLocaleString()} <span className="text-lg font-bold">SLC</span></span>
-                            </div>
-                        </div>
+                    <div className={priceHeaderClass}>
+                        <span className="text-3xl font-extrabold tracking-tight">{mixFec.toLocaleString()} <span className="text-lg font-bold">FEC</span></span>
+                        <span className="text-xl font-bold">+</span>
+                        <span className="text-3xl font-extrabold tracking-tight">{mixSlc.toLocaleString()} <span className="text-lg font-bold">SLC</span></span>
                     </div>
                 )
             } else if (p.displayCurrency === 'DOS') {
                 return (
-                    <div className="flex items-center justify-between mb-5">
-                         <div className="flex items-center">
-                            <span className="text-3xl font-extrabold text-[#F5416C] tracking-tight">{dosAmt.toLocaleString()}</span>
-                            <span className="text-lg font-bold text-[#F5416C] ml-2">DOS</span>
-                        </div>
+                    <div className={priceHeaderClass}>
+                        <span className="text-3xl font-extrabold tracking-tight">{dosAmt.toLocaleString()}</span>
+                        <span className="text-lg font-bold">DOS</span>
                     </div>
                 )
             } else {
                  return (
-                    <div className="flex items-center justify-between mb-5">
-                        <div className="flex items-center">
-                            <span className="text-3xl font-extrabold text-[#F5416C] tracking-tight">{(p.price * fecRate).toLocaleString()}</span>
-                            <span className="text-lg font-bold text-[#F5416C] ml-2">FEC</span>
-                        </div>
+                    <div className={priceHeaderClass}>
+                        <span className="text-3xl font-extrabold tracking-tight">{(p.price * fecRate).toLocaleString()}</span>
+                        <span className="text-lg font-bold">FEC</span>
                     </div>
                 )
             }

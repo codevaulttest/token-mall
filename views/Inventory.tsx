@@ -88,13 +88,13 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                             onClick={() => enterSelectionMode('transfer')}
                             className="h-8 px-2.5 bg-[#F5416C]/10 border border-[#F5416C]/20 text-[#F5416C] rounded-lg text-xs font-bold active:bg-[#F5416C]/20 transition flex items-center gap-1.5"
                         >
-                            <i className="fas fa-exchange-alt text-[#F5416C]"></i> 批量转让
+                            <i className="fas fa-exchange-alt text-[#F5416C]"></i> 转让
                         </button>
                         <button
                             onClick={() => enterSelectionMode('pickup')}
                             className="h-8 px-2.5 bg-[#25C4D9] border border-[#25C4D9] text-white rounded-lg text-xs font-bold active:scale-95 transition flex items-center gap-1.5 shadow-md shadow-[#25C4D9]/20"
                         >
-                            <i className="fas fa-truck text-white"></i> 批量提货
+                            <i className="fas fa-truck text-white"></i> 提货
                         </button>
                     </div>
                 )}
@@ -138,18 +138,8 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                                 </div>
                                 
                                 {!isSelectionMode && (
-                                    <div className="flex mt-3 items-center justify-between">
+                                    <div className="flex mt-3 items-center">
                                         <span className="text-xs font-semibold text-[#F5416C]">持有 x{item.count}</span>
-                                        <div className="flex gap-2">
-                                            <button onClick={(e) => { e.stopPropagation(); onActionClick('transfer', item); }} className="px-3 py-1.5 bg-[#F5416C]/10 border border-[#F5416C]/20 text-[#F5416C] rounded-lg text-xs font-medium active:bg-[#F5416C]/20 transition flex items-center gap-1">
-                                                <i className="fas fa-exchange-alt"></i>
-                                                转让
-                                            </button>
-                                            <button onClick={(e) => { e.stopPropagation(); onActionClick('pickup', item); }} className="px-4 py-1.5 bg-[#25C4D9] text-white rounded-lg text-xs font-bold active:scale-95 transition shadow-sm shadow-[#25C4D9]/30 flex items-center gap-1">
-                                                <i className="fas fa-truck"></i>
-                                                提货
-                                            </button>
-                                        </div>
                                     </div>
                                 )}
                             </div>

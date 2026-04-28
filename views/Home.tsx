@@ -54,7 +54,7 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
                                 onClick={() => setActiveTab(tab)}
                                 className="relative flex-shrink-0 flex flex-col items-center px-4 py-2.5 transition-colors"
                             >
-                                <span className={`text-sm whitespace-nowrap ${isActive ? 'text-[#F5416C] font-bold' : 'text-gray-600 font-medium'}`}>
+                                <span className={`text-base whitespace-nowrap ${isActive ? 'text-[#F5416C] font-bold' : 'text-gray-600 font-medium'}`}>
                                     {tab}
                                 </span>
                                 {isActive && (
@@ -68,15 +68,15 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
 
             {/* Product grid */}
             <div className="px-2 pt-2 pb-4">
-                <div className="columns-2 gap-2 space-y-2">
+                <div className="grid grid-cols-2 gap-2">
                     {PRODUCTS.map(p => (
                         <div
                             key={p.id}
-                            className="break-inside-avoid bg-white rounded overflow-hidden cursor-pointer active:opacity-90 transition-opacity"
+                            className="flex flex-col bg-white rounded overflow-hidden cursor-pointer active:opacity-90 transition-opacity"
                             onClick={() => onProductClick(p.id)}
                             style={{ transform: 'translateZ(0)' }}
                         >
-                            <div className="relative overflow-hidden max-h-52">
+                            <div className="relative overflow-hidden max-h-52 flex-shrink-0">
                                 <ImageWithFallback
                                     src={p.img}
                                     alt={p.title}
@@ -86,10 +86,10 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
                                 />
                             </div>
 
-                            <div className="px-2 pt-2 pb-2.5">
-                                <p className="text-sm text-gray-800 font-normal leading-snug line-clamp-2 mb-1.5">{p.title}</p>
-                                <p className="text-[11px] text-gray-400 leading-tight mb-1.5">{p.specs}</p>
-                                <p className="inline-block bg-[#F5416C] text-white text-sm font-extrabold leading-tight px-1.5 py-0.5 rounded">
+                            <div className="px-2 pt-2 pb-2.5 flex flex-col flex-1">
+                                <p className="text-base text-gray-800 font-normal leading-snug line-clamp-2 mb-1.5">{p.title}</p>
+                                <p className="text-xs text-gray-400 leading-tight mb-1.5">{p.specs}</p>
+                                <p className="mt-auto block w-full text-center bg-[#F5416C] text-white text-xs font-extrabold leading-tight px-3 py-1.5 rounded whitespace-nowrap overflow-hidden text-ellipsis">
                                     {formatTokenAmounts(p.tokenPrice)}
                                 </p>
                             </div>
