@@ -98,6 +98,9 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
                                     <p className="text-lg text-gray-800 font-normal leading-snug line-clamp-2 flex-1">{p.title}</p>
                                     <p className="text-sm text-gray-400 leading-tight shrink-0 mt-0.5 text-right">{p.specs}</p>
                                 </div>
+                                {p.retailPrice && (
+                                    <p className="text-sm text-gray-400 line-through mb-1">零售价 {p.retailPrice}</p>
+                                )}
                                 <p className="mt-auto block w-full text-center bg-gradient-to-r from-[#F5416C] to-[#FF6B9D] text-white text-xs font-extrabold leading-tight px-3 py-1.5 rounded whitespace-nowrap overflow-hidden text-ellipsis">
                                     {formatTokenAmounts(p.tokenPrice)}
                                 </p>
