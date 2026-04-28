@@ -26,7 +26,7 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
     };
 
     return (
-        <div className="pb-4 bg-[#F5416C] min-h-full">
+        <div className="pb-4 min-h-full bg-gradient-to-br from-[#F5416C] to-[#FF6B9D]">
             <AppHeader title="" onBack={handleExitToHost} />
 
             {/* Quick-nav buttons */}
@@ -87,9 +87,11 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
                             </div>
 
                             <div className="px-2 pt-2 pb-2.5 flex flex-col flex-1">
-                                <p className="text-base text-gray-800 font-normal leading-snug line-clamp-2 mb-1.5">{p.title}</p>
-                                <p className="text-xs text-gray-400 leading-tight mb-1.5">{p.specs}</p>
-                                <p className="mt-auto block w-full text-center bg-[#F5416C] text-white text-xs font-extrabold leading-tight px-3 py-1.5 rounded whitespace-nowrap overflow-hidden text-ellipsis">
+                                <div className="flex items-start justify-between gap-1 mb-1.5">
+                                    <p className="text-base text-gray-800 font-normal leading-snug line-clamp-2 flex-1">{p.title}</p>
+                                    <p className="text-sm text-gray-400 leading-tight shrink-0 mt-0.5 text-right">{p.specs}</p>
+                                </div>
+                                <p className="mt-auto block w-full text-center bg-gradient-to-r from-[#F5416C] to-[#FF6B9D] text-white text-xs font-extrabold leading-tight px-3 py-1.5 rounded whitespace-nowrap overflow-hidden text-ellipsis">
                                     {formatTokenAmounts(p.tokenPrice)}
                                 </p>
                             </div>

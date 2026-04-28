@@ -381,7 +381,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
         const mixSlc = Math.ceil(totalCNY * 0.2 * slcRate);
         const dosAmt = Math.ceil(totalCNY * dosRate);
         const cnvAmt = Math.ceil(totalCNY * getRate('CNV'));
-        const priceHeaderClass = 'inline-flex flex-wrap items-center gap-x-2 gap-y-1 bg-[#F5416C] text-white px-3 py-2 rounded mb-5';
+        const priceHeaderClass = 'inline-flex flex-wrap items-center gap-x-2 gap-y-1 bg-gradient-to-r from-[#F5416C] to-[#FF6B9D] text-white px-3 py-2 rounded mb-5';
 
         // Payment Options Config
         const paymentOptions = hasFixedTokenPrice
@@ -606,7 +606,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                             className={`w-full py-4 rounded-xl font-bold text-base shadow-lg transition flex items-center justify-center ${
                                 step === 2 && !canSubmit
                                     ? 'bg-gray-300 text-white cursor-not-allowed shadow-none'
-                                    : 'bg-[#F5416C] text-white shadow-[#F5416C]/30 active:scale-[0.98]'
+                                    : 'bg-gradient-to-r from-[#F5416C] to-[#FF6B9D] text-white shadow-[#F5416C]/30 active:scale-[0.98]'
                             }`}
                         >
                             <i className="fas fa-shopping-bag mr-2"></i> {step === 1 ? '立即兑换' : (canSubmit ? '确认兑换入库' : '请检查支付方式')}
