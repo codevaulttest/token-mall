@@ -22,7 +22,6 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
     // General State
     const [inputCount, setInputCount] = useState(1);
     const [info, setInfo] = useState('');
-    const [step, setStep] = useState<1 | 2>(1); // 1: View Details, 2: Select Specs/Currency
 
     // Payment State
     const [paymentMethod, setPaymentMethod] = useState<'MIX' | 'DOS' | 'CNV'>('MIX');
@@ -45,7 +44,6 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
         if (type !== 'none') {
             setInfo('');
             setModalView('main');
-            setStep(1); 
             setDeleteConfirmId(null);
             setSelectedAddressId(null);
             setInputCount(1);
@@ -70,7 +68,6 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
         if (type === 'product_detail' && data) {
             const p = data as Product;
             const totalCNY = p.price * inputCount;
-            const shippingFeeDOS = inputCount * 10; // 10 DOS per item
 
             const newAmounts: { [key: string]: number } = {};
 
@@ -79,7 +76,6 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                 fixedTokenEntries.forEach(([token, amount]) => {
                     newAmounts[token] = amount * inputCount;
                 });
-                newAmounts['DOS'] = (newAmounts['DOS'] || 0) + shippingFeeDOS;
                 setCalculatedAmounts(newAmounts);
                 return;
             }
@@ -96,19 +92,11 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                     newAmounts['FEC'] = Math.ceil(totalCNY * RATIO_FEC * fecToken.rate);
                     newAmounts['SLC'] = Math.ceil(totalCNY * RATIO_SLC * slcToken.rate);
                 }
-                // Add Shipping Fee
-                newAmounts['DOS'] = shippingFeeDOS;
             } else {
                 // Single Token Payment
                 const token = TOKENS.find(t => t.id === paymentMethod);
                 if (token) {
                     newAmounts[token.id] = Math.ceil(totalCNY * token.rate);
-                    
-                    if (token.id === 'DOS') {
-                        newAmounts['DOS'] += shippingFeeDOS;
-                    } else {
-                        newAmounts['DOS'] = shippingFeeDOS;
-                    }
                 }
             }
             setCalculatedAmounts(newAmounts);
@@ -457,111 +445,105 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
 
                     <div className="flex-1 overflow-y-auto p-6 pb-0 no-scrollbar">
                         <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6 shrink-0"></div>
-                        <div className="relative rounded-2xl overflow-hidden mb-5 shadow-sm h-64 bg-gray-100 shrink-0 group"><ImageWithFallback src={p.img} alt={p.title} className="w-full h-full" imgClassName="object-cover h-full"/></div>
+                        <div className="relative rounded-2xl overflow-hidden mb-5 shadow-sm h-64 bg-gray-100 shrink-0 group">
+                            <ImageWithFallback src={p.img} alt={p.title} className="w-full h-full" imgClassName="object-cover h-full"/>
+                            {p.productType && (
+                                <span className={`absolute top-3 right-3 z-10 text-xs font-bold px-2 py-1 rounded-md shadow-sm ${
+                                    p.productType === '数字商品' ? 'bg-purple-50 text-purple-600 ring-1 ring-purple-200' :
+                                    p.productType === '充值' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200' :
+                                    'bg-[#FFF1F6] text-[#F5416C] ring-1 ring-[#F5416C]/25'
+                                }`}>{p.productType}</span>
+                            )}
+                        </div>
                         <h2 className="text-xl font-extrabold text-gray-900 mb-1 leading-snug">{p.title}</h2>
                         <div className="flex items-center gap-2 mb-4"><span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">{p.specs}</span></div>
                         
-                        {/* Step 1: Info Only - Dynamic Header */}
-                        {step === 1 && renderPriceHeader()}
+                        {renderPriceHeader()}
 
-                        {/* Step 2: Payment Configuration */}
-                        {step === 2 && (
-                            <div className="fade-in mb-4">
-                                
-                                {/* Quantity & Shipping Config */}
-                                <div className="bg-gray-50 border border-gray-100 rounded-xl p-4 mb-5">
-                                    <div className="flex justify-between items-center mb-4 border-b border-gray-200/50 pb-4">
-                                        <span className="text-sm font-bold text-gray-800">兑换数量</span>
-                                        <div className="flex items-center gap-3">
-                                            <div className="flex items-center border border-gray-200 rounded-lg bg-white h-8 shadow-sm">
-                                                <button 
-                                                    onClick={() => updateQuantity(inputCount - 1)}
-                                                    className={`w-9 h-full flex items-center justify-center text-gray-500 transition ${inputCount <= 1 ? 'opacity-30 cursor-not-allowed' : 'active:bg-gray-100'}`}
-                                                    disabled={inputCount <= 1}
-                                                >
-                                                    <i className="fas fa-minus text-xs"></i>
-                                                </button>
-                                                <input 
-                                                    type="number" 
-                                                    value={inputCount}
-                                                    onChange={e => updateQuantity(parseInt(e.target.value) || 1)}
-                                                    className="w-10 text-center font-bold text-sm bg-transparent focus:outline-none no-spinner text-gray-800"
-                                                />
-                                                <button 
-                                                    onClick={() => updateQuantity(inputCount + 1)}
-                                                    className="w-9 h-full flex items-center justify-center text-gray-500 active:bg-gray-100 transition"
-                                                >
-                                                    <i className="fas fa-plus text-xs"></i>
-                                                </button>
-                                            </div>
+                        <div className="mb-6">
+                            <div className="bg-gray-50 border border-gray-100 rounded-xl p-4 mb-5">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-sm font-bold text-gray-800">兑换数量</span>
+                                    <div className="flex items-center gap-3">
+                                        <div className="flex items-center border border-gray-200 rounded-lg bg-white h-8 shadow-sm">
+                                            <button
+                                                onClick={() => updateQuantity(inputCount - 1)}
+                                                className={`w-9 h-full flex items-center justify-center text-gray-500 transition ${inputCount <= 1 ? 'opacity-30 cursor-not-allowed' : 'active:bg-gray-100'}`}
+                                                disabled={inputCount <= 1}
+                                            >
+                                                <i className="fas fa-minus text-xs"></i>
+                                            </button>
+                                            <input
+                                                type="number"
+                                                value={inputCount}
+                                                onChange={e => updateQuantity(parseInt(e.target.value) || 1)}
+                                                className="w-10 text-center font-bold text-sm bg-transparent focus:outline-none no-spinner text-gray-800"
+                                            />
+                                            <button
+                                                onClick={() => updateQuantity(inputCount + 1)}
+                                                className="w-9 h-full flex items-center justify-center text-gray-500 active:bg-gray-100 transition"
+                                            >
+                                                <i className="fas fa-plus text-xs"></i>
+                                            </button>
                                         </div>
                                     </div>
-                                    <div className="flex justify-between items-center">
-                                        <span className="text-xs font-medium text-gray-500">快递费 (10 DOS/件)</span>
-                                        <span className="text-sm font-bold text-[#F5416C]">{inputCount * 10} DOS</span>
-                                    </div>
                                 </div>
+                            </div>
 
-                                <h3 className="font-bold text-sm mb-3 text-gray-800 flex justify-between items-center">
-                                    支付方式 
-                                </h3>
-                                
-                                {/* Radio Payment Selection */}
-                                <div className="flex flex-col gap-3 mb-6">
-                                    {paymentOptions.map(option => {
-                                        const isSelected = paymentMethod === option.id;
-                                        return (
-                                            <div 
-                                                key={option.id}
-                                                onClick={() => setPaymentMethod(option.id as any)}
-                                                className={`flex items-center justify-between p-3.5 rounded-xl border transition-all cursor-pointer active:scale-[0.99] ${
-                                                    isSelected 
-                                                        ? 'bg-[#F5416C]/5 border-[#F5416C] shadow-sm' 
-                                                        : 'border-gray-200 bg-white hover:border-gray-300'
-                                                }`}
-                                            >
-                                                <div className="flex items-center gap-3">
-                                                    <div className="flex flex-col">
-                                                        <span className={`font-bold text-sm ${isSelected ? 'text-[#F5416C]' : 'text-gray-800'}`}>{option.label}</span>
-                                                        <span className="text-xs text-gray-400 mt-1">{option.balanceText}</span>
-                                                    </div>
-                                                </div>
-                                                <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${isSelected ? 'bg-[#F5416C] border-[#F5416C]' : 'border-gray-300 bg-white'}`}>
-                                                    <div className={`w-2 h-2 bg-white rounded-full transition-transform ${isSelected ? 'scale-100' : 'scale-0'}`}></div>
+                            <h3 className="font-bold text-sm mb-3 text-gray-800 flex justify-between items-center">
+                                支付方式
+                            </h3>
+
+                            <div className="flex flex-col gap-3">
+                                {paymentOptions.map(option => {
+                                    const isSelected = paymentMethod === option.id;
+                                    return (
+                                        <div
+                                            key={option.id}
+                                            onClick={() => setPaymentMethod(option.id as any)}
+                                            className={`flex items-center justify-between p-3.5 rounded-xl border transition-all cursor-pointer active:scale-[0.99] ${
+                                                isSelected
+                                                    ? 'bg-[#F5416C]/5 border-[#F5416C] shadow-sm'
+                                                    : 'border-gray-200 bg-white hover:border-gray-300'
+                                            }`}
+                                        >
+                                            <div className="flex items-center gap-3">
+                                                <div className="flex flex-col">
+                                                    <span className={`font-bold text-sm ${isSelected ? 'text-[#F5416C]' : 'text-gray-800'}`}>{option.label}</span>
+                                                    <span className="text-xs text-gray-400 mt-1">{option.balanceText}</span>
                                                 </div>
                                             </div>
-                                        );
-                                    })}
+                                            <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${isSelected ? 'bg-[#F5416C] border-[#F5416C]' : 'border-gray-300 bg-white'}`}>
+                                                <div className={`w-2 h-2 bg-white rounded-full transition-transform ${isSelected ? 'scale-100' : 'scale-0'}`}></div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        <div className="mb-8">
+                            <h3 className="font-bold text-sm mb-3 text-gray-800">图文详情</h3>
+                            {detailImages.length > 0 ? (
+                                <div className="rounded-xl overflow-hidden bg-gray-50">
+                                    {detailImages.map((imageUrl, index) => (
+                                        <img
+                                            key={imageUrl}
+                                            src={imageUrl}
+                                            alt={`${p.title}详情图 ${index + 1}`}
+                                            className="block w-full h-auto"
+                                            loading="lazy"
+                                        />
+                                    ))}
                                 </div>
-
-                                {/* Calculation Display Area Removed */}
-                            </div>
-                        )}
-
-                        {step === 1 && (
-                            <div className="mb-8">
-                                <h3 className="font-bold text-sm mb-3 text-gray-800">图文详情</h3>
-                                {detailImages.length > 0 ? (
-                                    <div className="rounded-xl overflow-hidden bg-gray-50">
-                                        {detailImages.map((imageUrl, index) => (
-                                            <img
-                                                key={imageUrl}
-                                                src={imageUrl}
-                                                alt={`${p.title}详情图 ${index + 1}`}
-                                                className="block w-full h-auto"
-                                                loading="lazy"
-                                            />
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <div className="rounded-xl bg-gray-50 p-4 text-sm text-gray-400">暂无图文详情</div>
-                                )}
-                            </div>
-                        )}
+                            ) : (
+                                <div className="rounded-xl bg-gray-50 p-4 text-sm text-gray-400">暂无图文详情</div>
+                            )}
+                        </div>
                     </div>
 
                     <div className="p-6 border-t border-gray-100 bg-white pb-10 shrink-0">
-                        {step === 2 && Object.keys(calculatedAmounts).length > 0 && (
+                        {Object.keys(calculatedAmounts).length > 0 && (
                             <div className="flex justify-between items-center mb-4">
                                 <span className="text-sm font-bold text-gray-800">合计</span>
                                 <div className="flex items-center gap-2">
@@ -577,22 +559,18 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                         )}
                         <button 
                             onClick={() => { 
-                                if (step === 1) {
-                                    setStep(2);
-                                } else {
-                                    if (!canSubmit) return;
-                                    buyProduct(p.id, inputCount, calculatedAmounts); 
-                                    onClose(); 
-                                }
+                                if (!canSubmit) return;
+                                buyProduct(p.id, inputCount, calculatedAmounts);
+                                onClose();
                             }} 
-                            disabled={step === 2 && !canSubmit}
+                            disabled={!canSubmit}
                             className={`w-full py-4 rounded-xl font-bold text-base shadow-lg transition flex items-center justify-center ${
-                                step === 2 && !canSubmit
+                                !canSubmit
                                     ? 'bg-gray-300 text-white cursor-not-allowed shadow-none'
                                     : 'bg-gradient-to-r from-[#F5416C] to-[#FF6B9D] text-white shadow-[#F5416C]/30 active:scale-[0.98]'
                             }`}
                         >
-                            <i className="fas fa-shopping-bag mr-2"></i> {step === 1 ? '立即兑换' : (canSubmit ? '确认兑换入库' : '请检查支付方式')}
+                            <i className="fas fa-shopping-bag mr-2"></i> {canSubmit ? '确认兑换入库' : '请检查支付方式'}
                         </button>
                     </div>
                 </div>

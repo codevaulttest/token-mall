@@ -37,7 +37,7 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
                             <button
                                 key={label}
                                 onClick={() => navigateTo(view)}
-                                className={`flex flex-col items-center justify-center gap-2 rounded-2xl ${bg} aspect-square active:opacity-70 active:scale-95 transition`}
+                                className={`flex flex-col items-center justify-center gap-3 rounded-2xl ${bg} aspect-square active:opacity-70 active:scale-95 transition`}
                             >
                                 <i className={`fas ${icon} text-[22px] ${color}`}></i>
                                 <span className="text-xs font-medium text-gray-600 leading-none text-center">{label}</span>
