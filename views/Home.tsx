@@ -87,9 +87,9 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
                                 />
                                 {p.productType && (
                                     <span className={`absolute top-1 right-1 text-xs font-bold px-1 py-0.5 rounded-sm ${
-                                        p.productType === '数字商品' ? 'bg-purple-500 text-white' :
-                                        p.productType === '充值' ? 'bg-amber-500 text-white' :
-                                        'bg-white text-[#F5416C] ring-1 ring-[#F5416C]/30'
+                                        p.productType === '数字商品' ? 'bg-purple-50 text-purple-600 ring-1 ring-purple-200' :
+                                        p.productType === '充值' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200' :
+                                        'bg-[#FFF1F6] text-[#F5416C] ring-1 ring-[#F5416C]/25'
                                     }`}>{p.productType}</span>
                                 )}
                             </div>
