@@ -89,7 +89,7 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                     ) : (
                         <button
                             onClick={() => navigateTo('history')}
-                            className="flex items-center gap-1 bg-white border border-gray-200 rounded-lg px-3 py-1 text-xs font-medium text-gray-500 active:bg-gray-50 transition"
+                            className="flex items-center gap-1 bg-white border border-gray-300 rounded-lg px-3 py-1 text-xs font-semibold text-gray-600 active:bg-gray-50 transition"
                         >
                             提货记录
                             <i className="fas fa-chevron-right text-[10px]"></i>
@@ -101,7 +101,7 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                     <div className="px-4 pb-4">
                         <button
                             onClick={enterSelectionMode}
-                            className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-white border border-[#F5416C]/25 text-sm font-bold text-[#F5416C] active:bg-[#FFF0F3] active:scale-[0.99] transition"
+                            className="flex h-11 w-full items-center justify-center gap-2 rounded-md bg-white border border-[#F5416C]/25 text-sm font-bold text-[#F5416C] active:bg-[#FFF0F3] active:scale-[0.99] transition"
                         >
                             <i className="fas fa-tasks text-sm"></i>
                             批量操作
@@ -110,7 +110,7 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                 )}
             </div>
 
-            <div className="px-4 space-y-4 fade-in pb-24 pt-2">
+            <div className="px-4 space-y-4 fade-in pb-24">
                 {inventory.length === 0 ? (
                     <div className="text-center text-gray-400 py-20 flex flex-col items-center">
                         <i className="fas fa-box-open text-6xl text-gray-200 mb-4"></i>
@@ -167,9 +167,9 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                 )}
             </div>
 
-            {/* Floating Action Bar for Bulk Selection */}
+            {/* Bottom Bar — idle: 批量操作 entry / selection: confirm actions */}
             {isSelectionMode && (
-                <div className="fixed bottom-0 left-0 right-0 z-[60] border-t border-gray-200 bg-white px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-3 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] slide-up">
+                <div className="fixed bottom-0 left-0 right-0 z-[60] bg-white border-t border-gray-100 px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-3 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] slide-up">
                     <div className="flex items-center gap-3">
                         <div className="min-w-0 flex-1">
                             <p className="text-xs text-gray-400">已选</p>
@@ -178,7 +178,7 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                         <button
                             onClick={() => handleBulkAction('transfer')}
                             disabled={selectedIds.size === 0}
-                            className={`inline-flex h-11 min-w-[88px] items-center justify-center gap-2 rounded-xl border px-4 text-sm font-bold transition active:scale-[0.98] ${selectedIds.size > 0 ? 'border-blue-100 bg-blue-50 text-blue-500 active:bg-blue-100' : 'border-gray-100 bg-gray-100 text-gray-300 cursor-not-allowed'}`}
+                            className={`inline-flex h-11 min-w-[88px] items-center justify-center gap-2 rounded-md border px-4 text-sm font-bold transition active:scale-[0.98] ${selectedIds.size > 0 ? 'border-blue-100 bg-blue-50 text-blue-500 active:bg-blue-100' : 'border-gray-100 bg-gray-100 text-gray-300 cursor-not-allowed'}`}
                         >
                             <i className="fas fa-exchange-alt text-sm"></i>
                             转让
@@ -186,7 +186,7 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                         <button
                             onClick={() => handleBulkAction('pickup')}
                             disabled={selectedIds.size === 0}
-                            className={`inline-flex h-11 min-w-[96px] items-center justify-center gap-2 rounded-xl px-4 text-sm font-bold text-white shadow-lg transition active:scale-[0.98] ${selectedIds.size > 0 ? 'bg-[#F5416C] shadow-[#F5416C]/25' : 'bg-gray-300 shadow-none cursor-not-allowed'}`}
+                            className={`inline-flex h-11 min-w-[96px] items-center justify-center gap-2 rounded-md px-4 text-sm font-bold text-white shadow-lg transition active:scale-[0.98] ${selectedIds.size > 0 ? 'bg-[#F5416C] shadow-[#F5416C]/25' : 'bg-gray-300 shadow-none cursor-not-allowed'}`}
                         >
                             <i className="fas fa-truck text-sm"></i>
                             提货

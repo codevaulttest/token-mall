@@ -41,24 +41,24 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
 
     return (
         <div className="bg-[#FFF3F6] min-h-full pb-6">
-            <AppHeader title="" onBack={handleBack}>
+            <AppHeader title="" onBack={handleBack} contentClassName="bg-[#FFF3F6]" childrenClassName="pt-3 pb-0">
                 {/* Main Toggle Switch */}
-                <div className="bg-gray-100 p-1 rounded-xl flex w-full">
+                <div className="bg-white p-1 rounded-xl flex w-full shadow-sm">
                         <button
                             onClick={() => setRecordType('redemption')}
-                            className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all duration-200 ${recordType === 'redemption' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                            className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all duration-200 ${recordType === 'redemption' ? 'bg-[#F5416C] text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
                         >
                             兑换记录
                         </button>
                         <button
                             onClick={() => setRecordType('pickup')}
-                            className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all duration-200 ${recordType === 'pickup' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                            className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all duration-200 ${recordType === 'pickup' ? 'bg-[#F5416C] text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
                         >
                             提货记录
                         </button>
                         <button
                             onClick={() => setRecordType('transfer')}
-                            className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all duration-200 ${recordType === 'transfer' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                            className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all duration-200 ${recordType === 'transfer' ? 'bg-[#F5416C] text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
                         >
                             转让记录
                         </button>
@@ -66,7 +66,7 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
 
                 {/* Sub Tabs for Pickup Only */}
                 {recordType === 'pickup' && (
-                    <div className="flex justify-around px-2 pt-2 -mb-4 border-t border-gray-50">
+                    <div className="flex justify-around px-2 pt-2 border-t border-gray-50">
                         {pickupTabs.map(tab => (
                             <div 
                                 key={tab} 

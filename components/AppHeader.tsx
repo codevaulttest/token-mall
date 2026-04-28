@@ -5,6 +5,7 @@ interface AppHeaderProps {
     onBack?: () => void;
     actions?: React.ReactNode;
     children?: React.ReactNode;
+    className?: string;
     contentClassName?: string;
     titleClassName?: string;
     childrenClassName?: string;
@@ -15,11 +16,12 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     onBack,
     actions,
     children,
+    className = '',
     contentClassName = '',
     titleClassName = '',
     childrenClassName = '',
 }) => (
-    <div className="sticky top-0 z-40 bg-white">
+    <div className={`sticky top-0 z-40 bg-white ${className}`}>
         <div className="px-4 pb-2 pt-[calc(env(safe-area-inset-top)+0.875rem)] flex justify-between items-center text-gray-900">
             <button
                 type="button"
