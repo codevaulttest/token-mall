@@ -38,7 +38,7 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
                         className="flex flex-col items-center justify-center gap-2 bg-white/20 rounded-xl py-4 active:scale-95 transition"
                     >
                         <i className={`fas ${icon} text-2xl text-white`}></i>
-                        <span className="text-xs font-medium text-white leading-tight text-center">{label}</span>
+                        <span className="text-xs font-semibold text-white leading-tight text-center">{label}</span>
                     </button>
                 ))}
             </div>
@@ -54,7 +54,7 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
                                 onClick={() => setActiveTab(tab)}
                                 className="relative flex-shrink-0 flex flex-col items-center px-4 py-2.5 transition-colors"
                             >
-                                <span className={`text-base whitespace-nowrap ${isActive ? 'text-[#F5416C] font-bold' : 'text-gray-600 font-medium'}`}>
+                                <span className={`text-sm whitespace-nowrap ${isActive ? 'text-[#F5416C] font-bold' : 'text-gray-600 font-medium'}`}>
                                     {tab}
                                 </span>
                                 {isActive && (
@@ -94,21 +94,18 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
                             </div>
 
                             <div className="px-2 pt-2 pb-2.5 flex flex-col flex-1">
-                                <div className="flex items-start justify-between gap-1 mb-1.5">
-                                    <p className="text-lg text-gray-800 font-normal leading-snug line-clamp-2 flex-1">{p.title}</p>
-                                    <p className="text-sm text-gray-400 leading-tight shrink-0 mt-0.5 text-right">{p.specs}</p>
-                                </div>
+                                <p className="text-[15px] text-gray-800 font-semibold leading-snug line-clamp-2 mb-1">{p.title}</p>
                                 {p.retailPrice && (
-                                    <p className="text-sm text-gray-400 line-through mb-1">零售价 {p.retailPrice}</p>
+                                    <p className="text-xs text-gray-400 line-through mb-1">零售价 {p.retailPrice}</p>
                                 )}
-                                <p className="mt-auto block w-full text-center bg-gradient-to-r from-[#F5416C] to-[#FF6B9D] text-white text-xs font-extrabold leading-tight px-3 py-1.5 rounded whitespace-nowrap overflow-hidden text-ellipsis">
+                                <p className="mt-auto block w-full text-center bg-gradient-to-r from-[#F5416C] to-[#FF6B9D] text-white text-xs font-bold leading-tight px-3 py-1.5 rounded whitespace-nowrap overflow-hidden text-ellipsis">
                                     {formatTokenAmounts(p.tokenPrice)}
                                 </p>
                             </div>
                         </div>
                     ))}
                 </div>
-                <div className="text-center text-white/60 text-xs py-6">—— 已经到底了 ——</div>
+                <div className="text-center text-white/80 text-xs py-6">—— 已经到底了 ——</div>
             </div>
         </div>
     );
