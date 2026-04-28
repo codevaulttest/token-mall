@@ -46,23 +46,19 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
             {/* Category tabs */}
             <div className="bg-white border-b border-gray-100">
                 <div className="flex overflow-x-auto no-scrollbar">
-                    {TABS.map((tab, idx) => {
+                    {TABS.map((tab) => {
                         const isActive = activeTab === tab;
-                        const isFirst = idx === 0;
                         return (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
                                 className="relative flex-shrink-0 flex flex-col items-center px-4 py-2.5 transition-colors"
                             >
-                                {isFirst && (
-                                    <span className="absolute top-1 right-0 bg-[#F5416C] text-white text-[9px] font-bold px-1 rounded-sm leading-tight">热</span>
-                                )}
                                 <span className={`text-sm whitespace-nowrap ${isActive ? 'text-[#F5416C] font-bold' : 'text-gray-600 font-medium'}`}>
                                     {tab}
                                 </span>
                                 {isActive && (
-                                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-[#F5416C] rounded-full"></span>
+                                    <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-[#F5416C] rounded-full"></span>
                                 )}
                             </button>
                         );
@@ -80,12 +76,12 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
                             onClick={() => onProductClick(p.id)}
                             style={{ transform: 'translateZ(0)' }}
                         >
-                            <div className="relative overflow-hidden">
+                            <div className="relative overflow-hidden max-h-52">
                                 <ImageWithFallback
                                     src={p.img}
                                     alt={p.title}
-                                    className="w-full"
-                                    imgClassName="object-cover object-top w-full"
+                                    className="w-full h-full"
+                                    imgClassName="object-cover object-top w-full h-full"
                                     loading="lazy"
                                 />
                             </div>
