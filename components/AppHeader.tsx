@@ -9,7 +9,7 @@ interface AppHeaderProps {
 
 export const AppHeader: React.FC<AppHeaderProps> = ({ title, onBack, actions, children }) => (
     <div className="sticky top-0 z-40 bg-white">
-        <div className="px-4 pb-3.5 pt-[calc(env(safe-area-inset-top)+0.875rem)] flex justify-between items-center text-gray-900 border-b border-gray-200">
+        <div className="px-4 pb-2 pt-[calc(env(safe-area-inset-top)+0.875rem)] flex justify-between items-center text-gray-900">
             <button
                 type="button"
                 onClick={onBack}
@@ -18,7 +18,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ title, onBack, actions, ch
             >
                 <i className="fas fa-chevron-left text-xl"></i>
             </button>
-            <div className="absolute left-1/2 -translate-x-1/2 font-medium text-lg tracking-wide">通证兑换</div>
+            <div className="absolute left-1/2 -translate-x-1/2 font-semibold text-lg tracking-[0.02em]">通证兑换</div>
             <div
                 className="h-8 w-[88px] rounded-full border border-gray-200 bg-white flex items-center justify-center gap-3"
                 aria-hidden="true"
