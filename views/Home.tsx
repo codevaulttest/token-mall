@@ -84,11 +84,18 @@ export const Home: React.FC<HomeProps> = ({ onProductClick }) => {
                                     imgClassName="object-cover object-top w-full h-full"
                                     loading="lazy"
                                 />
+                                {p.productType && (
+                                    <span className={`absolute top-1.5 right-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded-sm ${
+                                        p.productType === '数字商品' ? 'bg-purple-500 text-white' :
+                                        p.productType === '充值' ? 'bg-amber-500 text-white' :
+                                        'bg-white text-gray-700'
+                                    }`}>{p.productType}</span>
+                                )}
                             </div>
 
                             <div className="px-2 pt-2 pb-2.5 flex flex-col flex-1">
                                 <div className="flex items-start justify-between gap-1 mb-1.5">
-                                    <p className="text-base text-gray-800 font-normal leading-snug line-clamp-2 flex-1">{p.title}</p>
+                                    <p className="text-lg text-gray-800 font-normal leading-snug line-clamp-2 flex-1">{p.title}</p>
                                     <p className="text-sm text-gray-400 leading-tight shrink-0 mt-0.5 text-right">{p.specs}</p>
                                 </div>
                                 <p className="mt-auto block w-full text-center bg-gradient-to-r from-[#F5416C] to-[#FF6B9D] text-white text-xs font-extrabold leading-tight px-3 py-1.5 rounded whitespace-nowrap overflow-hidden text-ellipsis">

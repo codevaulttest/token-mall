@@ -12,6 +12,7 @@ export interface Product {
     sold: number;
     categories: string[];
     displayCurrency?: 'FEC' | 'DOS' | 'MIX'; // Optional override for display
+    productType?: '数字商品' | '实物' | '充值';
 }
 
 export interface Category {

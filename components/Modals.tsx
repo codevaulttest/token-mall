@@ -381,7 +381,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
         const mixSlc = Math.ceil(totalCNY * 0.2 * slcRate);
         const dosAmt = Math.ceil(totalCNY * dosRate);
         const cnvAmt = Math.ceil(totalCNY * getRate('CNV'));
-        const priceHeaderClass = 'inline-flex flex-wrap items-center gap-x-2 gap-y-1 bg-gradient-to-r from-[#F5416C] to-[#FF6B9D] text-white px-3 py-2 rounded mb-5';
+        const priceHeaderClass = 'inline-flex flex-wrap items-center gap-x-2 gap-y-1 bg-gradient-to-r from-[#F5416C] to-[#FF6B9D] text-white px-3 py-2 rounded-xl mb-5';
 
         // Payment Options Config
         const paymentOptions = hasFixedTokenPrice
