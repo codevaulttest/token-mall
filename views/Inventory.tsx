@@ -122,7 +122,7 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                         <div 
                             key={item.inventoryId} 
                             onClick={() => isSelectionMode ? toggleSelection(item.inventoryId) : null}
-                            className={`bg-white p-3 rounded-xl border border-gray-100/80 shadow-[0_6px_18px_rgba(15,23,42,0.06)] flex gap-3 transition-all duration-300 ${isSelectionMode ? 'cursor-pointer active:scale-[0.99]' : ''} ${isSelectionMode && selectedIds.has(item.inventoryId) ? 'border-[#F5416C]/30 ring-2 ring-[#F5416C]/10 shadow-[0_10px_26px_rgba(152,24,70,0.14)]' : ''}`}
+                            className={`bg-white p-3 rounded-lg border border-gray-100/80 shadow-[0_6px_18px_rgba(15,23,42,0.06)] flex gap-3 transition-all duration-300 ${isSelectionMode ? 'cursor-pointer active:scale-[0.99]' : ''} ${isSelectionMode && selectedIds.has(item.inventoryId) ? 'border-[#F5416C]/30 ring-2 ring-[#F5416C]/10 shadow-[0_10px_26px_rgba(152,24,70,0.14)]' : ''}`}
                         >
                             {/* Selection Checkbox */}
                             {isSelectionMode && (
@@ -133,7 +133,7 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                                 </div>
                             )}
 
-                            <div className="relative w-24 h-24 bg-gray-100 rounded-xl flex-shrink-0 overflow-hidden">
+                            <div className="relative w-24 h-24 bg-gray-100 rounded-md flex-shrink-0 overflow-hidden">
                                 <ImageWithFallback
                                     src={item.img}
                                     alt={item.title}
@@ -141,9 +141,9 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                                     imgClassName="object-cover h-full"
                                 />
                                 {item.productType && (
-                                    <span className={`absolute top-1 right-1 text-xs font-bold px-1 py-0.5 rounded-sm ${
+                                    <span className={`absolute top-1 right-1 text-xs font-bold px-1 py-0.5 rounded ${
                                         item.productType === '数字商品' ? 'bg-purple-50 text-purple-600 ring-1 ring-purple-200' :
-                                        item.productType === '充值' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200' :
+                                        item.productType === '话费' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200' :
                                         'bg-[#FFF1F6] text-[#F5416C] ring-1 ring-[#F5416C]/25'
                                     }`}>{item.productType}</span>
                                 )}
@@ -154,16 +154,19 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                                         <h3 className="font-bold text-gray-800 text-sm line-clamp-2 leading-snug flex-1 min-w-0">{item.title}</h3>
                                         <span
                                             aria-label={`持有 ${item.count} 件`}
-                                            className="shrink-0 inline-flex items-center justify-center rounded-sm border border-[#F5416C]/10 bg-[#FFF0F3] px-2.5 py-0.5 text-xs font-bold leading-5 text-[#F5416C]"
+                                            className="shrink-0 inline-flex items-center justify-center rounded border border-[#F5416C]/10 bg-[#FFF0F3] px-2.5 py-0.5 text-xs font-bold leading-5 text-[#F5416C]"
                                         >
                                             x{item.count}
                                         </span>
                                     </div>
-                                    <span className="inline-flex items-center mt-1.5 px-2 py-0.5 rounded-sm bg-gray-100 text-xs text-gray-500 font-medium">{item.specs}</span>
+                                    <span className="inline-flex items-center mt-1.5 px-2 py-0.5 rounded bg-gray-100 text-xs text-gray-500 font-medium">{item.specs}</span>
                                 </div>
                             </div>
                         </div>
                     ))
+                )}
+                {inventory.length > 0 && (
+                    <p className="text-center text-gray-400 text-xs py-4">—— 已经到底了 ——</p>
                 )}
             </div>
 

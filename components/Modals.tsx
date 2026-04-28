@@ -453,7 +453,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                             {p.productType && (
                                 <span className={`absolute top-3 right-3 z-10 text-xs font-bold px-2 py-1 rounded-md shadow-sm ${
                                     p.productType === '数字商品' ? 'bg-purple-50 text-purple-600 ring-1 ring-purple-200' :
-                                    p.productType === '充值' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200' :
+                                    p.productType === '话费' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200' :
                                     'bg-[#FFF1F6] text-[#F5416C] ring-1 ring-[#F5416C]/25'
                                 }`}>{p.productType}</span>
                             )}
