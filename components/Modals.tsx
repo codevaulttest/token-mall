@@ -297,7 +297,9 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                     <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6 shrink-0"></div>
                     <h3 className="text-lg font-bold mb-2 text-center">{isTransfer ? '批量转让' : '批量提货'}</h3>
                     <p className="text-xs text-center text-gray-400 mb-6 shrink-0">已选择 {selectedItems.length} 种商品，共 {totalCount} 件</p>
-                    <div className="flex-1 overflow-y-auto mb-6 bg-gray-50 rounded-xl p-3 border border-gray-100 no-scrollbar">
+                    <div className="flex-1 overflow-y-auto mb-6 no-scrollbar">
+                        <label className="block text-xs font-medium text-gray-500 mb-2 ml-1">商品清单</label>
+                        <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
                         {selectedItems.map(item => {
                             const currentQty = bulkQuantities[item.inventoryId] ?? 0;
                             return (
@@ -308,16 +310,17 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                                 </div>
                             );
                         })}
+                        </div>
                     </div>
                     <div className="space-y-5 shrink-0">
                         {isTransfer ? (
-                             <div><label className="block text-xs font-medium text-gray-700 mb-1.5 ml-1">接收人账号</label><div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 px-3 focus-within:bg-white focus-within:border-[#F5416C] focus-within:ring-2 focus-within:ring-[#F5416C]/10 transition-all"><i className="fas fa-user text-gray-400 mr-2"></i><input type="text" value={info} onChange={e => setInfo(e.target.value)} placeholder="请输入接收人码库账号/手机号" className="flex-1 bg-transparent py-3.5 text-sm focus:outline-none font-medium" /><div className="w-px h-5 bg-gray-300 mx-3"></div><button className="text-[#F5416C] text-xs font-bold whitespace-nowrap flex items-center gap-1.5 active:opacity-60 transition-opacity"><i className="fas fa-address-book"></i> 地址簿</button></div></div>
+                             <div><label className="block text-xs font-medium text-gray-700 mb-1.5 ml-1">接收人账号</label><div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 px-3 focus-within:bg-white focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/10 transition-all"><i className="fas fa-user text-gray-400 mr-2"></i><input type="text" value={info} onChange={e => setInfo(e.target.value)} placeholder="请输入接收人码库账号/手机号" className="flex-1 bg-transparent py-3.5 text-sm focus:outline-none font-medium" /><div className="w-px h-5 bg-gray-300 mx-3"></div><button className="text-blue-500 text-xs font-bold whitespace-nowrap flex items-center gap-1.5 active:opacity-60 transition-opacity"><i className="fas fa-address-book"></i> 地址簿</button></div></div>
                         ) : (
                             <div><label className="block text-xs font-medium text-gray-700 mb-1.5 ml-1">收货地址</label>{renderAddressCard(currentAddress)}<div className="mt-3 flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg"><span className="text-xs font-medium text-gray-600">快递费 (10 DOS/件)</span><span className="text-sm font-bold text-[#F5416C]">{totalCount * 10} DOS</span></div></div>
                         )}
                     </div>
                     <div className="mt-8 shrink-0">
-                        <button onClick={() => { const payload = selectedItems.map(i => ({ inventoryId: i.inventoryId, count: bulkQuantities[i.inventoryId] ?? 0 })).filter(i => i.count > 0); if (payload.length === 0) return; if (isTransfer) { bulkTransferProduct(payload, info); onClose(); } else { if (!selectedAddressId) { alert('请选择收货地址'); return; } const addressInfo = `${currentAddress?.name} ${currentAddress?.phone} ${currentAddress?.fullAddress}`; bulkPickupProduct(payload, addressInfo); onClose(); } }} disabled={totalCount === 0} className={`w-full py-4 rounded-xl font-bold active:scale-[0.98] transition shadow-md ${totalCount === 0 ? 'bg-gray-300 text-white cursor-not-allowed shadow-none' : (isTransfer ? 'bg-[#F5416C] text-white shadow-[#F5416C]/30' : 'bg-[#25C4D9] text-white shadow-[#25C4D9]/30')}`}>{isTransfer ? '确认批量转让' : '确认提交批量提货'}</button>
+                        <button onClick={() => { const payload = selectedItems.map(i => ({ inventoryId: i.inventoryId, count: bulkQuantities[i.inventoryId] ?? 0 })).filter(i => i.count > 0); if (payload.length === 0) return; if (isTransfer) { bulkTransferProduct(payload, info); onClose(); } else { if (!selectedAddressId) { alert('请选择收货地址'); return; } const addressInfo = `${currentAddress?.name} ${currentAddress?.phone} ${currentAddress?.fullAddress}`; bulkPickupProduct(payload, addressInfo); onClose(); } }} disabled={totalCount === 0} className={`w-full py-4 rounded-xl font-bold active:scale-[0.98] transition shadow-md ${totalCount === 0 ? 'bg-gray-300 text-white cursor-not-allowed shadow-none' : (isTransfer ? 'bg-blue-500 text-white shadow-blue-500/30' : 'bg-[#F5416C] text-white shadow-[#F5416C]/30')}`}>{isTransfer ? '确认批量转让' : '确认提交批量提货'}</button>
                     </div>
                 </div>
             </div>
@@ -655,7 +658,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                                 pickupProduct(invItem.inventoryId, inputCount, addressInfo); 
                                 onClose(); 
                             }} 
-                            className="w-full bg-[#25C4D9] text-white py-4 rounded-xl font-bold active:scale-[0.98] transition shadow-md shadow-[#25C4D9]/30"
+                            className="w-full bg-[#F5416C] text-white py-4 rounded-xl font-bold active:scale-[0.98] transition shadow-md shadow-[#F5416C]/30"
                         >
                             确认提交申请
                         </button>
@@ -673,8 +676,8 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                     <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
                     <h3 className="text-lg font-bold mb-6 text-center">转让商品</h3>
                     
-                     <div className="bg-[#F5416C]/5 border border-[#F5416C]/10 p-4 rounded-xl mb-5 flex items-center gap-3">
-                        <div className="bg-white p-2 rounded-lg shadow-sm"><i className="fas fa-gift text-[#F5416C]"></i></div>
+                     <div className="bg-blue-50 border border-blue-100 p-4 rounded-xl mb-5 flex items-center gap-3">
+                        <div className="bg-white p-2 rounded-lg shadow-sm"><i className="fas fa-gift text-blue-500"></i></div>
                         <div className="flex-1 text-sm font-medium">
                             <div className="truncate">{invItem.title}</div>
                             <div className="text-xs text-gray-400 mt-1">{invItem.specs}</div>
@@ -711,13 +714,13 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                                         <i className="fas fa-plus text-xs"></i>
                                     </button>
                                 </div>
-                                <button onClick={() => setInputCount(invItem.count)} className="text-[#F5416C] font-bold text-sm px-2 py-2 active:bg-pink-50 rounded-lg transition whitespace-nowrap">最大</button>
+                                <button onClick={() => setInputCount(invItem.count)} className="text-blue-500 font-bold text-sm px-2 py-2 active:bg-blue-50 rounded-lg transition whitespace-nowrap">最大</button>
                             </div>
                         </div>
 
                         <div>
                             <label className="block text-xs font-medium text-gray-700 mb-1.5 ml-1">接收人账号</label>
-                            <div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 px-3 focus-within:bg-white focus-within:border-[#F5416C] focus-within:ring-2 focus-within:ring-[#F5416C]/10 transition-all">
+                            <div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 px-3 focus-within:bg-white focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/10 transition-all">
                                 <i className="fas fa-user text-gray-400 mr-2"></i>
                                 <input 
                                     type="text" 
@@ -727,7 +730,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                                     className="flex-1 bg-transparent py-3.5 text-sm focus:outline-none font-medium" 
                                 />
                                 <div className="w-px h-5 bg-gray-300 mx-3"></div>
-                                <button className="text-[#F5416C] text-xs font-bold whitespace-nowrap flex items-center gap-1.5 active:opacity-60 transition-opacity">
+                                <button className="text-blue-500 text-xs font-bold whitespace-nowrap flex items-center gap-1.5 active:opacity-60 transition-opacity">
                                     <i className="fas fa-address-book"></i> 地址簿
                                 </button>
                             </div>
@@ -737,7 +740,7 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                     <div className="mt-8">
                         <button 
                             onClick={() => { transferProduct(invItem.inventoryId, inputCount, info); onClose(); }} 
-                            className="w-full bg-[#F5416C] text-white py-4 rounded-xl font-bold active:scale-[0.98] transition shadow-lg shadow-[#F5416C]/30"
+                            className="w-full bg-blue-500 text-white py-4 rounded-xl font-bold active:scale-[0.98] transition shadow-lg shadow-blue-500/30"
                         >
                             确认转让
                         </button>

@@ -83,16 +83,22 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                         </button>
                     </div>
                 ) : (
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5">
+                        <button
+                            onClick={() => navigateTo('history')}
+                            className="h-8 px-2 bg-white border border-[#F5416C]/20 text-[#F5416C] rounded-lg text-xs font-bold active:bg-[#F5416C]/5 transition flex items-center gap-1"
+                        >
+                            <i className="fas fa-clipboard-list text-[#F5416C]"></i> 提货记录
+                        </button>
                         <button
                             onClick={() => enterSelectionMode('transfer')}
-                            className="h-8 px-2.5 bg-[#F5416C]/10 border border-[#F5416C]/20 text-[#F5416C] rounded-lg text-xs font-bold active:bg-[#F5416C]/20 transition flex items-center gap-1.5"
+                            className="h-8 px-2 bg-blue-50 border border-blue-100 text-blue-500 rounded-lg text-xs font-bold active:bg-blue-100 transition flex items-center gap-1"
                         >
-                            <i className="fas fa-exchange-alt text-[#F5416C]"></i> 转让
+                            <i className="fas fa-exchange-alt text-blue-500"></i> 转让
                         </button>
                         <button
                             onClick={() => enterSelectionMode('pickup')}
-                            className="h-8 px-2.5 bg-[#25C4D9] border border-[#25C4D9] text-white rounded-lg text-xs font-bold active:scale-95 transition flex items-center gap-1.5 shadow-md shadow-[#25C4D9]/20"
+                            className="h-8 px-2 bg-[#F5416C] border border-[#F5416C] text-white rounded-lg text-xs font-bold active:scale-95 transition flex items-center gap-1 shadow-md shadow-[#F5416C]/20"
                         >
                             <i className="fas fa-truck text-white"></i> 提货
                         </button>
@@ -112,12 +118,12 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                         <div 
                             key={item.inventoryId} 
                             onClick={() => isSelectionMode ? toggleSelection(item.inventoryId) : null}
-                            className={`bg-white p-3 rounded-2xl shadow-[0_10px_24px_rgba(15,23,42,0.12)] flex gap-3 transition-all duration-300 ${isSelectionMode ? 'cursor-pointer active:scale-[0.99]' : ''} ${isSelectionMode && selectedIds.has(item.inventoryId) ? 'ring-2 ring-[#F5416C]/50 bg-[#F5416C]/5' : ''}`}
+                            className={`bg-white p-3 rounded-2xl shadow-[0_10px_24px_rgba(15,23,42,0.12)] flex gap-3 transition-all duration-300 ${isSelectionMode ? 'cursor-pointer active:scale-[0.99]' : ''} ${isSelectionMode && selectedIds.has(item.inventoryId) ? (selectionType === 'transfer' ? 'ring-2 ring-blue-400/50 bg-blue-50/60' : 'ring-2 ring-[#F5416C]/50 bg-[#F5416C]/5') : ''}`}
                         >
                             {/* Selection Checkbox */}
                             {isSelectionMode && (
                                 <div className="flex items-center justify-center w-8">
-                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${selectedIds.has(item.inventoryId) ? 'border-[#F5416C] bg-[#F5416C]' : 'border-gray-300'}`}>
+                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${selectedIds.has(item.inventoryId) ? (selectionType === 'transfer' ? 'border-blue-500 bg-blue-500' : 'border-[#F5416C] bg-[#F5416C]') : 'border-gray-300'}`}>
                                         {selectedIds.has(item.inventoryId) && <i className="fas fa-check text-white text-xs"></i>}
                                     </div>
                                 </div>
@@ -154,7 +160,7 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                      <button 
                         onClick={handleConfirmBulk}
                         disabled={selectedIds.size === 0}
-                        className={`w-full py-4 rounded-xl font-bold text-white shadow-lg transition-all active:scale-[0.98] ${selectedIds.size > 0 ? (selectionType === 'transfer' ? 'bg-[#F5416C] shadow-[#F5416C]/30' : 'bg-[#25C4D9] shadow-[#25C4D9]/30') : 'bg-gray-300 shadow-none cursor-not-allowed'}`}
+                        className={`w-full py-4 rounded-xl font-bold text-white shadow-lg transition-all active:scale-[0.98] ${selectedIds.size > 0 ? (selectionType === 'transfer' ? 'bg-blue-500 shadow-blue-500/30' : 'bg-[#F5416C] shadow-[#F5416C]/30') : 'bg-gray-300 shadow-none cursor-not-allowed'}`}
                     >
                         {selectionType === 'transfer' ? '确认批量转让' : '确认批量提货'} ({selectedIds.size})
                     </button>
