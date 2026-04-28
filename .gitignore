@@ -27,4 +27,8 @@ dist-ssr
 .firebaserc
 .firebase/
 firebase.json
+
+
 *.sh
+.playwright-cli
+output

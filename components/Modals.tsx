@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Product, InventoryItem, ModalType, Address, TokenConfig } from '../types';
 import { useStore } from '../context/StoreContext';
 import { ImageWithFallback } from './ImageWithFallback';
-import { FecIcon, SlcIcon, DosIcon, CnvIcon } from './CurrencyIcons';
 import { CHINA_REGIONS, TOKENS, formatTokenAmounts, getProductDetailImages, getTokenAmountEntries } from '../constants';
 
 interface ModalProps {
@@ -204,15 +203,6 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
         );
     };
 
-    const renderTokenIcon = (id: string, className = "w-5 h-5") => {
-        switch(id) {
-            case 'FEC': return <FecIcon className={className} />;
-            case 'SLC': return <SlcIcon className={className} />;
-            case 'DOS': return <DosIcon className={className} />;
-            case 'CNV': return <CnvIcon className={className} />;
-            default: return null;
-        }
-    };
 
     if (type === 'none') return null;
 
@@ -531,13 +521,6 @@ export const UniversalModal: React.FC<ModalProps> = ({ type, data, selectedItems
                                                 }`}
                                             >
                                                 <div className="flex items-center gap-3">
-                                                    <div className="flex -space-x-2">
-                                                        {option.icons.map((icon, idx) => (
-                                                            <div key={icon} className={`relative z-${10-idx}`}>
-                                                                {renderTokenIcon(icon, "w-8 h-8 rounded-full border-2 border-white bg-white")}
-                                                            </div>
-                                                        ))}
-                                                    </div>
                                                     <div className="flex flex-col">
                                                         <span className={`font-bold text-sm ${isSelected ? 'text-[#F5416C]' : 'text-gray-800'}`}>{option.label}</span>
                                                         <span className="text-xs text-gray-400 mt-1">{option.balanceText}</span>
