@@ -68,41 +68,49 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
     };
 
     return (
-        <div className="min-h-full relative pb-4 bg-white">
+        <div className="min-h-full relative pb-4 bg-[#FFF3F6]">
             <AppHeader
-                title={isSelectionMode ? '选择商品' : '我的库存'}
+                title=""
                 onBack={isSelectionMode ? cancelSelectionMode : () => navigateTo('home')}
-                actions={isSelectionMode ? (
-                    <div className="flex items-center gap-3 animate-fade-in">
-                        <button onClick={cancelSelectionMode} className="text-gray-500 font-medium text-sm">取消</button>
-                        <button onClick={toggleSelectAll} className="text-[#F5416C] font-medium text-sm">
-                            {selectedIds.size === inventory.length ? '取消全选' : '全选'}
-                        </button>
-                    </div>
-                ) : (
-                    <div className="flex items-center gap-3">
+            />
+
+            <div>
+                <div className="px-6 pt-4 pb-5 flex items-center justify-between">
+                    <h1 className="text-xl font-extrabold text-gray-900 leading-tight">
+                        {isSelectionMode ? '选择商品' : '我的库存'}
+                    </h1>
+                    {isSelectionMode ? (
+                        <div className="flex items-center gap-3 animate-fade-in">
+                            <button onClick={cancelSelectionMode} className="text-gray-500 font-medium text-sm">取消</button>
+                            <button onClick={toggleSelectAll} className="text-[#F5416C] font-bold text-sm">
+                                {selectedIds.size === inventory.length ? '取消全选' : '全选'}
+                            </button>
+                        </div>
+                    ) : (
                         <button
                             onClick={() => navigateTo('history')}
-                            className="flex items-center gap-1 text-gray-500 text-xs font-medium active:text-gray-700 transition"
+                            className="flex items-center gap-1 bg-white border border-gray-200 rounded-lg px-3 py-1 text-xs font-medium text-gray-500 active:bg-gray-50 transition"
                         >
                             提货记录
                             <i className="fas fa-chevron-right text-[10px]"></i>
                         </button>
+                    )}
+                </div>
+
+                {!isSelectionMode && inventory.length > 0 && (
+                    <div className="px-4 pb-4">
+                        <button
+                            onClick={enterSelectionMode}
+                            className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-white border border-[#F5416C]/25 text-sm font-bold text-[#F5416C] active:bg-[#FFF0F3] active:scale-[0.99] transition"
+                        >
+                            <i className="fas fa-tasks text-sm"></i>
+                            批量操作
+                        </button>
                     </div>
                 )}
-            >
-                {!isSelectionMode && inventory.length > 0 && (
-                    <button
-                        onClick={enterSelectionMode}
-                        className="flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#F5416C]/15 bg-[#FFF4F7] text-sm font-bold text-[#F5416C] active:bg-[#FFE8EF] transition"
-                    >
-                        <i className="fas fa-tasks text-sm"></i>
-                        批量操作
-                    </button>
-                )}
-            </AppHeader>
+            </div>
 
-            <div className={`px-4 space-y-3 fade-in pb-24 ${isSelectionMode ? 'pt-3' : ''}`}>
+            <div className="px-4 space-y-4 fade-in pb-24 pt-2">
                 {inventory.length === 0 ? (
                     <div className="text-center text-gray-400 py-20 flex flex-col items-center">
                         <i className="fas fa-box-open text-6xl text-gray-200 mb-4"></i>
@@ -114,12 +122,12 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                         <div 
                             key={item.inventoryId} 
                             onClick={() => isSelectionMode ? toggleSelection(item.inventoryId) : null}
-                            className={`bg-white p-3 rounded-2xl border border-gray-100/80 shadow-[0_6px_18px_rgba(15,23,42,0.06)] flex gap-3 transition-all duration-300 ${isSelectionMode ? 'cursor-pointer active:scale-[0.99]' : ''} ${isSelectionMode && selectedIds.has(item.inventoryId) ? 'ring-2 ring-[#F5416C]/50 bg-[#F5416C]/5' : ''}`}
+                            className={`bg-white p-3 rounded-xl border border-gray-100/80 shadow-[0_6px_18px_rgba(15,23,42,0.06)] flex gap-3 transition-all duration-300 ${isSelectionMode ? 'cursor-pointer active:scale-[0.99]' : ''} ${isSelectionMode && selectedIds.has(item.inventoryId) ? 'border-[#F5416C]/30 ring-2 ring-[#F5416C]/10 shadow-[0_10px_26px_rgba(152,24,70,0.14)]' : ''}`}
                         >
                             {/* Selection Checkbox */}
                             {isSelectionMode && (
                                 <div className="flex items-center justify-center w-8">
-                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${selectedIds.has(item.inventoryId) ? 'border-[#F5416C] bg-[#F5416C]' : 'border-gray-300'}`}>
+                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${selectedIds.has(item.inventoryId) ? 'border-[#E92E5C] bg-[#E92E5C] ring-4 ring-white/70' : 'border-gray-300 bg-white'}`}>
                                         {selectedIds.has(item.inventoryId) && <i className="fas fa-check text-white text-xs"></i>}
                                     </div>
                                 </div>
@@ -146,12 +154,12 @@ export const Inventory: React.FC<InventoryProps> = ({ onActionClick }) => {
                                         <h3 className="font-bold text-gray-800 text-sm line-clamp-2 leading-snug flex-1 min-w-0">{item.title}</h3>
                                         <span
                                             aria-label={`持有 ${item.count} 件`}
-                                            className="shrink-0 inline-flex items-center justify-center rounded-full border border-[#F5416C]/10 bg-[#FFF0F3] px-2.5 py-0.5 text-xs font-bold leading-5 text-[#F5416C]"
+                                            className="shrink-0 inline-flex items-center justify-center rounded-sm border border-[#F5416C]/10 bg-[#FFF0F3] px-2.5 py-0.5 text-xs font-bold leading-5 text-[#F5416C]"
                                         >
                                             x{item.count}
                                         </span>
                                     </div>
-                                    <p className="text-xs text-gray-400 mt-1">{item.specs}</p>
+                                    <span className="inline-flex items-center mt-1.5 px-2 py-0.5 rounded-sm bg-gray-100 text-xs text-gray-500 font-medium">{item.specs}</span>
                                 </div>
                             </div>
                         </div>

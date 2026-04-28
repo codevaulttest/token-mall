@@ -40,7 +40,7 @@ export const History: React.FC<HistoryProps> = ({ initialTab = 'pickup' }) => {
     };
 
     return (
-        <div className="bg-white min-h-full pb-6">
+        <div className="bg-[#FFF3F6] min-h-full pb-6">
             <AppHeader title="" onBack={handleBack}>
                 {/* Main Toggle Switch */}
                 <div className="bg-gray-100 p-1 rounded-xl flex w-full">

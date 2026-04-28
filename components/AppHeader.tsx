@@ -5,9 +5,20 @@ interface AppHeaderProps {
     onBack?: () => void;
     actions?: React.ReactNode;
     children?: React.ReactNode;
+    contentClassName?: string;
+    titleClassName?: string;
+    childrenClassName?: string;
 }
 
-export const AppHeader: React.FC<AppHeaderProps> = ({ title, onBack, actions, children }) => (
+export const AppHeader: React.FC<AppHeaderProps> = ({
+    title,
+    onBack,
+    actions,
+    children,
+    contentClassName = '',
+    titleClassName = '',
+    childrenClassName = '',
+}) => (
     <div className="sticky top-0 z-40 bg-white">
         <div className="px-4 pb-2 pt-[calc(env(safe-area-inset-top)+0.875rem)] flex justify-between items-center text-gray-900">
             <button
@@ -30,15 +41,19 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ title, onBack, actions, ch
                 </span>
             </div>
         </div>
-        {(title || actions) && (
-            <div className="px-6 pt-4 pb-4 flex items-center justify-between">
-                {title && <h1 className="text-xl font-extrabold text-gray-900 leading-tight">{title}</h1>}
-                {actions}
-            </div>
-        )}
-        {children && (
-            <div className="px-4 pb-1">
-                {children}
+        {(title || actions || children) && (
+            <div className={contentClassName}>
+                {(title || actions) && (
+                    <div className="px-6 pt-4 pb-4 flex items-center justify-between">
+                        {title && <h1 className={`text-xl font-extrabold text-gray-900 leading-tight ${titleClassName}`}>{title}</h1>}
+                        {actions}
+                    </div>
+                )}
+                {children && (
+                    <div className={`px-4 pb-1 ${childrenClassName}`}>
+                        {children}
+                    </div>
+                )}
             </div>
         )}
     </div>
